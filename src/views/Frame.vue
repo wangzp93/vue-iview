@@ -53,7 +53,7 @@
         },
         mounted() {
             this.formatMenuData()
-            this.getSelectFromRouter(this.$route.path)
+            this.getSelectFromRouter(this.$route.path, true)
         },
         beforeRouteUpdate (to, from, next) {
             this.getSelectFromRouter(to.path)
@@ -95,7 +95,7 @@
             /**
              * 根据路由选中菜单
              */
-            getSelectFromRouter(path) {
+            getSelectFromRouter(path, isFirst) {
                 let keyList = path.replace(/^\//, '').split('/'),
                     len = keyList.length,
                     openMenus = []
@@ -103,10 +103,14 @@
                     openMenus.push(keyList[i])
                 }
                 this.activeNav = keyList[0]     // 选中的导航栏
-                this.openMenus = openMenus          // 展开的菜单
+                if (isFirst) {
+                    this.openMenus = openMenus          // 展开的菜单
+                }
                 this.activeMenu = keyList[len - 1]  // 选中的菜单
                 this.$nextTick(()=> {
-                    this.$refs.menu.updateOpened()
+                    if (isFirst) {
+                        this.$refs.menu.updateOpened()
+                    }
                     this.$refs.menu.updateActiveName()
                 })
             }
