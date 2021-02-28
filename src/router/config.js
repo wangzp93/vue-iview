@@ -1,36 +1,53 @@
-const navList = [{
-  key: 'nav1',
-  label: '导航1',
-  menuList: [{
-    key: 'menu1',
-    label: '菜单1',
-    menuList: [{
-      key: 'menu1-1',
-      label: '菜单1-1',
-      path: 'nav1/Menu1-1'
-    }]
-  }, {
-    key: 'menu3',
-    label: '菜单1-3',
-    path: 'nav1/Menu1-3',
-    menuList: []
-  }]
-}, {
-  key: 'nav2',
-  label: '导航2',
-  menuList: [{
-    key: 'menu2-3',
-    label: '菜单2-3',
-    path: 'nav2/Menu2-3'
-  }, {
-    key: 'menu2-1',
-    label: '菜单2-1',
-    menuList: [{
-      key: 'menu2-1-1',
-      label: '菜单2-1-1',
-      path: 'nav2/Menu2-1'
-    }]
-  }]
-}]
-
-export {navList}
+export const navList = [
+  {
+    name: 'nav1',
+    meta: { title: '导航1' },
+    icon: 'shop',
+    children: [
+      {
+        name: 'shop',
+        meta: { title: '商品管理' },
+        icon: 'shop',
+        children: [
+          {
+            name: 'cate',
+            meta: { title: '商品分类' },
+            component: 'nav1/shop/Cate',
+            icon: 'icon'
+          },
+          {
+            name: 'goods',
+            meta: { title: '管理商品' },
+            component: 'nav1/shop/Goods',
+            icon: 'develop'
+          }
+        ]
+      },
+      {
+        name: 'member',
+        meta: { title: '会员管理' },
+        icon: 'peoples',
+        children: [
+          {
+            name: 'member',
+            meta: { title: '会员' },
+            component: 'nav1/member/Member',
+            icon: 'peoples'
+          },
+          {
+            name: 'userlevel',
+            meta: { title: '会员等级' },
+            component: 'nav1/member/UserLevel',
+            icon: 'dengji'
+          },
+        ]
+      }
+    ]
+  },
+  {
+    name: 'nav2',
+    meta: { title: '导航2' },
+    icon: 'shop',
+    children: []
+  }
+]

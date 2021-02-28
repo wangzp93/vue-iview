@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Login from '../views/Login.vue'
-import Frame from '../views/Frame.vue'
+import Frame from '@/views/Frame'
 
 import {navList} from './config'
 
@@ -29,7 +28,7 @@ function menuToRouter(navList, parentPath) {
   return routerList
 }
 
-const routerList = menuToRouter(navList, '')
+const routerList = menuToRouter([], '')
 
 Vue.use(VueRouter)
 
@@ -40,13 +39,28 @@ VueRouter.prototype.push = function (location) {
   })
 }
 
-const router = new VueRouter({
+export default new VueRouter({
   routes: [
-    {path: '/login', name: 'login', component: Login},
-    {path: '/', name: 'frame', redirect: routerList[0].path, component: Frame, children: routerList},
-    {path: '/404', name: '404', component: () => import(/* webpackChunkName: "error" */ '../error/404.vue')},
-    {path: '*', redirect: '/404'},
+    {
+      path: '/login',
+      name: 'Login',
+      meta: { title: '登录' },
+      component: (resolve)=> require(['@/views/Login'], resolve)
+    },
+    {
+      path: '/404',
+      name: '404',
+      component: () => import(/* webpackChunkName: "error" */ '../error/404.vue')
+    },
+    {
+      path: '/',
+      // redirect: routerList[0].path,
+      component: Frame,
+      children: routerList
+    },
+    {
+      path: '*',
+      redirect: '/404'
+    },
   ]
 })
-
-export default router

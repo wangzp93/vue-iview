@@ -13,7 +13,7 @@
           </Input>
         </FormItem>
       </Form>
-      <Button @click="login" type="primary" class="login-btn">登录</Button>
+      <Button @click="Login" type="primary" class="login-btn">登录</Button>
     </div>
   </div>
 </template>
