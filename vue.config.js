@@ -1,3 +1,3 @@
 module.exports = {
-    lintOnSave: false,	//是否开启esLint
+  lintOnSave: false,	//是否开启esLint
 }

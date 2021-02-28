@@ -4,9 +4,9 @@ import router from './router'
 import 'view-design/dist/styles/iview.css'
 import './my-theme/index.less'
 import {
-    Layout, Header, Sider, Content, Footer,
-    Menu, Submenu, MenuGroup, MenuItem, Icon,
-    Form, FormItem, Input, Button
+  Layout, Header, Sider, Content, Footer,
+  Menu, Submenu, MenuGroup, MenuItem, Icon,
+  Form, FormItem, Input, Button
 } from 'view-design'
 
 Vue.component('Layout', Layout)
