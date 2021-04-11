@@ -1,15 +1,10 @@
 <template>
-  <div>商品分类</div>
+    <div>资源位管理</div>
 </template>
 
 <script>
 export default {
-  name: "Cate",
-  data() {
-    return {
-
-    }
-  }
+    name: "Resource"
 }
 </script>
 

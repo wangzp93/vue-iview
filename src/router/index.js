@@ -7,28 +7,30 @@ import {navList} from './config'
 /**
  * 菜单列表转换为路由
  */
-function menuToRouter(navList, parentPath) {
+function menuToRouter(navList = [], parentPath = '') {
   let routerList = []
   for (let i = 0, len = navList.length; i < len; i++) {
     let menuItem = navList[i],
-        menuList = menuItem.menuList,
+        children = menuItem.children,
         routerItem = {
-          path: `${parentPath}/${menuItem.key}`,
-          name: menuItem.key
+          path: `${parentPath}/${menuItem.name}`,
+          name: menuItem.name,
+          meta: menuItem.meta
         }
     routerList.push(routerItem)
-    if (menuList && menuList.length > 0) {	// 不是子节点
-      let children = menuToRouter(menuList, routerItem.path)
-      routerItem.redirect = children[0].path
-      routerList = routerList.concat(children)
+    if (children && children.length > 0) {	// 不是子节点
+      let childRouter = menuToRouter(children, routerItem.path)
+      routerItem.redirect = `${routerItem.path}/${children[0].name}`
+      // routerItem.children = childRouter
+      routerList = routerList.concat(childRouter)
     } else {	// 是子节点，路由懒加载
-      routerItem.component = resolve => require([`@/views/${menuItem.path}.vue`], resolve)
+      routerItem.component = resolve => require([`@/views/${menuItem.component}.vue`], resolve)
     }
   }
   return routerList
 }
 
-const routerList = menuToRouter([], '')
+const routerList = menuToRouter(navList)
 
 Vue.use(VueRouter)
 
@@ -39,7 +41,7 @@ VueRouter.prototype.push = function (location) {
   })
 }
 
-export default new VueRouter({
+const router =  new VueRouter({
   routes: [
     {
       path: '/login',
@@ -54,7 +56,7 @@ export default new VueRouter({
     },
     {
       path: '/',
-      // redirect: routerList[0].path,
+      redirect: routerList[0].name,
       component: Frame,
       children: routerList
     },
@@ -64,3 +66,5 @@ export default new VueRouter({
     },
   ]
 })
+
+export default router

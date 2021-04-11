@@ -1,15 +1,12 @@
 <template>
-  <div>商品分类</div>
+  <div>
+    微信号管理
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Cate",
-  data() {
-    return {
-
-    }
-  }
+name: "Account"
 }
 </script>
 

@@ -17,7 +17,7 @@ export const navList = [
           },
           {
             name: 'goods',
-            meta: { title: '管理商品' },
+            meta: { title: '商品' },
             component: 'nav1/shop/Goods',
             icon: 'develop'
           }
@@ -29,7 +29,7 @@ export const navList = [
         icon: 'peoples',
         children: [
           {
-            name: 'member',
+            name: 'memberUser',
             meta: { title: '会员' },
             component: 'nav1/member/Member',
             icon: 'peoples'
@@ -48,6 +48,45 @@ export const navList = [
     name: 'nav2',
     meta: { title: '导航2' },
     icon: 'shop',
-    children: []
+    children: [
+      {
+        name: 'wechat',
+        meta: { title: '微信管理' },
+        icon: 'shop',
+        children: [
+          {
+            name: 'account',
+            meta: { title: '微信号管理' },
+            component: 'nav2/wechat/Account',
+            icon: 'icon'
+          },
+          {
+            name: 'group',
+            meta: { title: '微信群管理' },
+            component: 'nav2/wechat/Group',
+            icon: 'develop'
+          }
+        ]
+      },
+      {
+        name: 'ad',
+        meta: { title: '广告管理' },
+        icon: 'peoples',
+        children: [
+          {
+            name: 'resource',
+            meta: { title: '资源位管理' },
+            component: 'nav1/ad/Resource',
+            icon: 'peoples'
+          },
+          {
+            name: 'material',
+            meta: { title: '素材管理' },
+            component: 'nav1/ad/Material',
+            icon: 'dengji'
+          },
+        ]
+      }
+    ]
   }
 ]
