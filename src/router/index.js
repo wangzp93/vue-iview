@@ -38,6 +38,7 @@ const router =  new VueRouter({
       }, {
         path: 'nav1',
         name: 'nav1',
+        meta: { title: '导航1' },
         component: PageContent,
         redirect: '/nav1/shop/cate',
         children: [{
@@ -54,6 +55,7 @@ const router =  new VueRouter({
       }, {
         path: 'nav2',
         name: 'nav2',
+        meta: { title: '导航2' },
         component: PageContent,
         redirect: '/nav2/ad/material',
         children: [{

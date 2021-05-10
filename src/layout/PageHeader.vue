@@ -1,6 +1,8 @@
 <template>
   <div class="page-header">
+    <!-- logo -->
     <img src="../assets/logo.png" class="logo" @click="toHome" alt="">
+    <!-- 导航栏 -->
     <div class="nav-wrap">
       <div v-for="navItem in navList" :key="navItem.name"
            @click="toNav(navItem.name)"
@@ -10,6 +12,7 @@
         {{ navItem.meta.title }}
       </div>
     </div>
+    <!-- 用户信息 -->
     <div class="user-info">
       <Icon type="md-person" />
       cat
@@ -25,19 +28,16 @@
       activeNav: {
         type: String,
         required: true
+      },
+      // 导航列表
+      navList: {
+        type: Array,
+        required: true
       }
     },
     data() {
       return {
-        navList: [{
-          name: 'nav1',
-          meta: { title: '导航1' },
-          icon: 'ios-paper',
-        }, {
-          name: 'nav2',
-          meta: { title: '导航2' },
-          icon: 'ios-paper',
-        }]
+
       }
     },
     methods: {

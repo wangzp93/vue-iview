@@ -1,6 +1,6 @@
 <template>
   <div class="page-layout">
-    <page-header :activeNav="activeNav"></page-header>
+    <page-header :active-nav="activeNav" :nav-list="navList"></page-header>
     <div class="page-layout-content">
       <router-view></router-view>
     </div>
@@ -18,6 +18,44 @@ export default {
   data() {
     return {
       activeNav: 'home',    // 当前选中的nav
+      // 导航列表
+      navList: [{
+        name: 'nav1',
+        meta: { title: '导航1' },
+        icon: 'ios-paper',
+      }, {
+        name: 'nav2',
+        meta: { title: '导航2' },
+        icon: 'ios-paper',
+      }],
+      // 菜单列表
+      menuList: []
+    }
+  },
+  created() {
+    const route = this.$route
+    this.onRouteChange(route)
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.onRouteChange(to)
+    next()
+  },
+  methods: {
+    /**
+     * 根据路由渲染导航与菜单
+     */
+    onRouteChange(route) {
+      const path = route.path.replace('/', ''),
+        pathArr = path.split('/')
+      // 选中的导航栏
+      const activeNav = pathArr[0]
+      this.activeNav = activeNav
+
+      //
+      const navIndex = this.navList.findIndex((item)=> {
+        return item.name === activeNav
+      })
+      console.log(navIndex)
     }
   }
 }
