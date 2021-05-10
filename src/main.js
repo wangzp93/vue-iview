@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
+// 路由
 import router from './router'
+// iview样式
 import 'view-design/dist/styles/iview.css'
-import './my-theme/index.less'
+// 自定义主题
+import './style/my-theme/index.less'
+// iview组件
 import {
   Layout, Header, Sider, Content, Footer,
   Menu, Submenu, MenuGroup, MenuItem, Icon,
@@ -21,13 +25,14 @@ Vue.component('MenuGroup', MenuGroup)
 Vue.component('MenuItem', MenuItem)
 Vue.component('Icon', Icon)
 
-
 Vue.component('Form', Form)
 Vue.component('FormItem', FormItem)
 Vue.component('Input', Input)
 Vue.component('Button', Button)
 
+// 阻止启动时生成生产提示
 Vue.config.productionTip = false
+// 事件总线
 Vue.prototype.$bus = new Vue()
 
 new Vue({

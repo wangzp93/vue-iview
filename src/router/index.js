@@ -1,36 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Frame from '@/views/Frame'
-
-import {navList} from './config'
-
-/**
- * 菜单列表转换为路由
- */
-function menuToRouter(navList = [], parentPath = '') {
-  let routerList = []
-  for (let i = 0, len = navList.length; i < len; i++) {
-    let menuItem = navList[i],
-        children = menuItem.children,
-        routerItem = {
-          path: `${parentPath}/${menuItem.name}`,
-          name: menuItem.name,
-          meta: menuItem.meta
-        }
-    routerList.push(routerItem)
-    if (children && children.length > 0) {	// 不是子节点
-      let childRouter = menuToRouter(children, routerItem.path)
-      routerItem.redirect = `${routerItem.path}/${children[0].name}`
-      // routerItem.children = childRouter
-      routerList = routerList.concat(childRouter)
-    } else {	// 是子节点，路由懒加载
-      routerItem.component = resolve => require([`@/views/${menuItem.component}.vue`], resolve)
-    }
-  }
-  return routerList
-}
-
-const routerList = menuToRouter(navList)
+import PageLayout from '../layout/PageLayout'
+import PageContent from '../layout/PageContent'
 
 Vue.use(VueRouter)
 
@@ -47,18 +18,39 @@ const router =  new VueRouter({
       path: '/login',
       name: 'Login',
       meta: { title: '登录' },
-      component: (resolve)=> require(['@/views/Login'], resolve)
+      component: (resolve)=> require(['../views/login'], resolve)
     },
     {
       path: '/404',
       name: '404',
+      meta: { title: '404' },
       component: () => import(/* webpackChunkName: "error" */ '../error/404.vue')
     },
     {
       path: '/',
-      redirect: routerList[0].name,
-      component: Frame,
-      children: routerList
+      component: PageLayout,
+      redirect: '/home',
+      children: [{
+        path: 'home',
+        name: 'home',
+        meta: { title: '首页' },
+        component: (resolve)=> require(['../views/home'], resolve)
+      }, {
+        path: 'nav1',
+        component: PageContent,
+        redirect: '/nav1/shop/cate',
+        children: [{
+          path: 'shop/cate',
+          name: 'cate',
+          meta: { title: '商品分类' },
+          component: (resolve)=> require(['../views/nav1/shop/cate'], resolve)
+        }, {
+          path: 'shop/goods',
+          name: 'goods',
+          meta: { title: '商品列表' },
+          component: (resolve)=> require(['../views/nav1/shop/goods'], resolve)
+        }]
+      }]
     },
     {
       path: '*',
