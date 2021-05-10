@@ -2,19 +2,42 @@
   <div class="page-header">
     <img src="../assets/logo.png" class="logo" @click="toHome" alt="">
     <div class="nav-wrap">
-      <div class="nav-item active">导航1</div>
-      <div class="nav-item">导航2</div>
+      <div v-for="navItem in navList" :key="navItem.name"
+           @click="toNav(navItem.name)"
+           class="nav-item" :class="{active: activeNav === navItem.name}"
+      >
+        <Icon :type="navItem.icon" />
+        {{ navItem.meta.title }}
+      </div>
     </div>
-    <div class="user-info">cat</div>
+    <div class="user-info">
+      <Icon type="md-person" />
+      cat
+    </div>
   </div>
 </template>
 
 <script>
   export default {
     name: "PageHeader",
+    props: {
+      // 当前选中的nav
+      activeNav: {
+        type: String,
+        required: true
+      }
+    },
     data() {
       return {
-
+        navList: [{
+          name: 'nav1',
+          meta: { title: '导航1' },
+          icon: 'ios-paper',
+        }, {
+          name: 'nav2',
+          meta: { title: '导航2' },
+          icon: 'ios-paper',
+        }]
       }
     },
     methods: {
@@ -23,6 +46,13 @@
        */
       toHome() {
         this.$router.push('/')
+      },
+
+      /**
+       * 跳转nav
+       */
+      toNav(nav) {
+        this.$router.push({ name: nav })
       }
     }
   }

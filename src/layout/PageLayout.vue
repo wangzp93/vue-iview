@@ -1,6 +1,6 @@
 <template>
   <div class="page-layout">
-    <page-header></page-header>
+    <page-header :activeNav="activeNav"></page-header>
     <div class="page-layout-content">
       <router-view></router-view>
     </div>
@@ -15,6 +15,11 @@ export default {
   components: {
     PageHeader
   },
+  data() {
+    return {
+      activeNav: 'home',    // 当前选中的nav
+    }
+  }
 }
 </script>
 

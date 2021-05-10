@@ -37,6 +37,7 @@ const router =  new VueRouter({
         component: (resolve)=> require(['../views/home'], resolve)
       }, {
         path: 'nav1',
+        name: 'nav1',
         component: PageContent,
         redirect: '/nav1/shop/cate',
         children: [{
@@ -49,6 +50,22 @@ const router =  new VueRouter({
           name: 'goods',
           meta: { title: '商品列表' },
           component: (resolve)=> require(['../views/nav1/shop/goods'], resolve)
+        }]
+      }, {
+        path: 'nav2',
+        name: 'nav2',
+        component: PageContent,
+        redirect: '/nav2/ad/material',
+        children: [{
+          path: 'ad/material',
+          name: 'material',
+          meta: { title: '素材' },
+          component: (resolve)=> require(['../views/nav2/ad/material'], resolve)
+        }, {
+          path: 'ad/resource',
+          name: 'resource',
+          meta: { title: '资源位' },
+          component: (resolve)=> require(['../views/nav2/ad/resource'], resolve)
         }]
       }]
     },
