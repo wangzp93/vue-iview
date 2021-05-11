@@ -25,67 +25,39 @@ export default {
     SiderMenu
   },
   props: {
-    aaa: String
+    // 菜单列表
+    menuList: {
+      type: Array,
+      required: true
+    }
   },
   data() {
     return {
-      activeSub: [],
-      activeMenu: '',
-      menuList: [
-        {
-          name: 'shop',
-          meta: { title: '商品管理' },
-          icon: 'ios-paper',
-          children: [
-            {
-              name: 'cate',
-              meta: { title: '商品分类' },
-              icon: 'ios-paper'
-            },
-            {
-              name: 'goods',
-              meta: { title: '商品' },
-              icon: 'ios-paper'
-            }
-          ]
-        },
-        {
-          name: 'ad',
-          meta: { title: '广告管理' },
-          icon: 'ios-paper',
-          children: [
-            {
-              name: 'material',
-              meta: { title: '素材' },
-              icon: 'ios-paper'
-            },
-            {
-              name: 'resource',
-              meta: { title: '资源位' },
-              icon: 'ios-paper'
-            },
-          ]
-        }
-      ]
+      activeSub: Object.freeze([]),   // 展开的目录
+      activeMenu: '',   // 选中的菜单
     }
   },
   created() {
-    this.getRouteInfo()
+    this.onRouteChange()
   },
   beforeUpdate() {
-    this.getRouteInfo()
+    this.onRouteChange()
   },
   methods: {
-    getRouteInfo() {
+    /**
+     * 根据路由变化渲染菜单
+     */
+    onRouteChange() {
       const route = this.$route
       const path = route.path.replace('/', ''),
         pathArr = path.split('/')
       pathArr.shift()   // 去掉导航
       this.activeMenu = pathArr.pop()   // 选中的菜单
-      this.activeSub = pathArr    // 展开的目录
+      this.activeSub = Object.freeze(pathArr)    // 展开的目录
+      // 手动刷新菜单
       this.$nextTick(()=> {
-        // 展开的目录需手动更新
         this.$refs.menu.updateOpened()
+        this.$refs.menu.updateActiveName()
       })
     }
   }

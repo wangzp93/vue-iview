@@ -2,7 +2,7 @@
   <div class="page-layout">
     <page-header :active-nav="activeNav" :nav-list="navList"></page-header>
     <div class="page-layout-content">
-      <router-view></router-view>
+      <router-view :menu-list="menuList"></router-view>
     </div>
   </div>
 </template>
@@ -19,21 +19,14 @@ export default {
     return {
       activeNav: 'home',    // 当前选中的nav
       // 导航列表
-      navList: [{
-        name: 'nav1',
-        meta: { title: '导航1' },
-        icon: 'ios-paper',
-      }, {
-        name: 'nav2',
-        meta: { title: '导航2' },
-        icon: 'ios-paper',
-      }],
+      navList: Object.freeze([]),
       // 菜单列表
-      menuList: []
+      menuList: Object.freeze([])
     }
   },
   created() {
     const route = this.$route
+    this.initNav()
     this.onRouteChange(route)
   },
   beforeRouteUpdate(to, from, next) {
@@ -42,20 +35,37 @@ export default {
   },
   methods: {
     /**
+     * 初始化导航栏
+     */
+    initNav() {
+      const navList = this.$store.getters.getNavList
+      this.navList = Object.freeze(navList)
+    },
+
+    /**
      * 根据路由渲染导航与菜单
      */
     onRouteChange(route) {
       const path = route.path.replace('/', ''),
         pathArr = path.split('/')
-      // 选中的导航栏
       const activeNav = pathArr[0]
+
+      // nav未改变，停止执行
+      if (activeNav === this.activeNav) {
+        return
+      }
+      // 选中的导航栏
       this.activeNav = activeNav
 
-      //
-      const navIndex = this.navList.findIndex((item)=> {
+      // 菜单列表
+      const navList = this.navList
+      const navIndex = navList.findIndex((item)=> {
         return item.name === activeNav
       })
-      console.log(navIndex)
+      if (navIndex >= 0) {
+        const menuList = navList[navIndex].children || []
+        this.menuList = Object.freeze(menuList)
+      }
     }
   }
 }

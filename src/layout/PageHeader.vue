@@ -35,11 +35,6 @@
         required: true
       }
     },
-    data() {
-      return {
-
-      }
-    },
     methods: {
       /**
        * 回到首页

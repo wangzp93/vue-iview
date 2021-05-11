@@ -2,6 +2,8 @@ import Vue from 'vue'
 import App from './App.vue'
 // 路由
 import router from './router'
+// vuex
+import store from './store'
 // iview样式
 import 'view-design/dist/styles/iview.css'
 // 自定义主题
@@ -37,5 +39,6 @@ Vue.prototype.$bus = new Vue()
 
 new Vue({
   router,
+  store,
   render: h => h(App),
 }).$mount('#app')

@@ -8,11 +8,10 @@ Vue.use(VueRouter)
 // 解决跳转当前路由报错问题
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function (location) {
-  return originalPush.call(this, location).catch(() => {
-  })
+  return originalPush.call(this, location).catch(() => {})
 }
 
-const router =  new VueRouter({
+const router = new VueRouter({
   routes: [
     {
       path: '/login',
@@ -29,7 +28,7 @@ const router =  new VueRouter({
     {
       path: '/',
       component: PageLayout,
-      redirect: '/home',
+      redirect: { name: 'home' },
       children: [{
         path: 'home',
         name: 'home',
@@ -40,7 +39,7 @@ const router =  new VueRouter({
         name: 'nav1',
         meta: { title: '导航1' },
         component: PageContent,
-        redirect: '/nav1/shop/cate',
+        redirect: { name: 'cate' },
         children: [{
           path: 'shop/cate',
           name: 'cate',
@@ -57,7 +56,7 @@ const router =  new VueRouter({
         name: 'nav2',
         meta: { title: '导航2' },
         component: PageContent,
-        redirect: '/nav2/ad/material',
+        redirect: { name: 'material' },
         children: [{
           path: 'ad/material',
           name: 'material',
@@ -73,7 +72,7 @@ const router =  new VueRouter({
     },
     {
       path: '*',
-      redirect: '/404'
+      redirect: { name: '404' }
     },
   ]
 })
