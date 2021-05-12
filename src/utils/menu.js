@@ -12,7 +12,7 @@ export function navToRouter(navList = []) {
       path: name,
       name,
       meta,
-      component: (resolve)=> require(['../layout/PageContent'], resolve),
+      component: (resolve)=> require(['@/layout/PageContent'], resolve),
       redirect,
       children
     })
@@ -20,22 +20,25 @@ export function navToRouter(navList = []) {
   return routerList
 }
 
-export function menuToRouter(menuList = [], parentPath = '', nav = '') {
+function menuToRouter(menuList = [], parentPath = '', nav = '') {
   const routerList = []
   for (let i=0, len=menuList.length; i<len; i++) {
     const menuItem = menuList[i],
       name = menuItem.name,
-      children = menuItem.children
+      path = parentPath + (parentPath ? '/' : '') + name,
+      children = menuItem.children || []
     if (children.length > 0) {
-
+      // 子级扁平化
+      const childRouterList = menuToRouter(children, path, nav)
+      routerList.push(...childRouterList)
     } else {
-      const path = parentPath + (parentPath ? '/' : '') + name
       routerList.push({
         path,
         name,
         meta: menuItem.meta,
-        component: (resolve)=> require([`../views/${nav}/${path}`], resolve)
+        component: (resolve) => require([`@/views/${nav}/${path}`], resolve)
       })
     }
   }
+  return routerList
 }

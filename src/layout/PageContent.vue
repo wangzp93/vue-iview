@@ -2,7 +2,7 @@
   <div class="page-content-wrap">
     <!-- 左侧菜单栏 -->
     <div class="page-content-left">
-      <Menu ref="menu" :open-names="activeSub" :active-name="activeMenu">
+      <Menu ref="menu" :open-names="activeSub" :active-name="activeMenu" width="auto">
         <sider-menu :menu-list="menuList"></sider-menu>
       </Menu>
     </div>

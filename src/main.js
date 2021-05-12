@@ -12,7 +12,8 @@ import './style/my-theme/index.less'
 import {
   Layout, Header, Sider, Content, Footer,
   Menu, Submenu, MenuGroup, MenuItem, Icon,
-  Form, FormItem, Input, Button
+  Dropdown, DropdownMenu, DropdownItem,
+  Form, FormItem, Input, Button,
 } from 'view-design'
 
 Vue.component('Layout', Layout)
@@ -26,6 +27,10 @@ Vue.component('Submenu', Submenu)
 Vue.component('MenuGroup', MenuGroup)
 Vue.component('MenuItem', MenuItem)
 Vue.component('Icon', Icon)
+
+Vue.component('Dropdown', Dropdown)
+Vue.component('DropdownMenu', DropdownMenu)
+Vue.component('DropdownItem', DropdownItem)
 
 Vue.component('Form', Form)
 Vue.component('FormItem', FormItem)

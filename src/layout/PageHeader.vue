@@ -13,44 +13,81 @@
       </div>
     </div>
     <!-- 用户信息 -->
-    <div class="user-info">
-      <Icon type="md-person" />
-      cat
-    </div>
+    <Dropdown @on-click="onDropClick">
+      <div class="user-info">
+        <Icon type="md-person" />
+        {{ userInfo.username }}
+        <Icon type="ios-arrow-down" />
+      </div>
+      <DropdownMenu slot="list">
+        <DropdownItem name="logout">
+          <Icon type="md-exit" />
+          退出登录
+        </DropdownItem>
+      </DropdownMenu>
+    </Dropdown>
   </div>
 </template>
 
 <script>
-  export default {
-    name: "PageHeader",
-    props: {
-      // 当前选中的nav
-      activeNav: {
-        type: String,
-        required: true
-      },
-      // 导航列表
-      navList: {
-        type: Array,
-        required: true
-      }
-    },
-    methods: {
-      /**
-       * 回到首页
-       */
-      toHome() {
-        this.$router.push('/')
-      },
+import { mapGetters, mapActions } from 'vuex'
 
-      /**
-       * 跳转nav
-       */
-      toNav(nav) {
-        this.$router.push({ name: nav })
-      }
+export default {
+  name: "PageHeader",
+  props: {
+    // 当前选中的nav
+    activeNav: {
+      type: String,
+      required: true
+    },
+    // 导航列表
+    navList: {
+      type: Array,
+      required: true
+    }
+  },
+  computed: {
+    ...mapGetters([
+      'userInfo'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'setUserInfo'
+    ]),
+    /**
+     * 回到首页
+     */
+    toHome() {
+      this.$router.push('/')
+    },
+
+    /**
+     * 跳转nav
+     */
+    toNav(nav) {
+      this.$router.push({ name: nav })
+    },
+
+    /**
+     * 点击下拉菜单
+     */
+    onDropClick(name) {
+      this[name]()
+    },
+
+    /**
+     * 退出登录
+     */
+    logout() {
+      this.setUserInfo({}).then(()=> {
+        this.$router.push({
+          name: 'login'
+        })
+      })
     }
   }
+}
 </script>
 
 <style scoped lang="less">
@@ -59,6 +96,7 @@
   height: 64px;
   padding-right: 24px;
   background: #001529;
+  user-select: none;
   /* logo */
   .logo {
     width: 200px;
@@ -89,6 +127,7 @@
     line-height: 64px;
     padding: 0 20px;
     color: #FFF;
+    cursor: pointer;
   }
 }
 </style>

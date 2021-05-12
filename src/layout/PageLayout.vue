@@ -38,7 +38,7 @@ export default {
      * 初始化导航栏
      */
     initNav() {
-      const navList = this.$store.getters.getNavList
+      const navList = this.$store.getters.navList
       this.navList = Object.freeze(navList)
     },
 

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PageLayout from '../layout/PageLayout'
-import PageContent from '../layout/PageContent'
 
 Vue.use(VueRouter)
 
@@ -15,26 +14,27 @@ const router = new VueRouter({
   routes: [
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       meta: { title: '登录' },
-      component: (resolve)=> require(['../views/login'], resolve)
+      component: () => import(/* webpackChunkName: "home" */ '../views/login')
     },
     {
       path: '/404',
       name: '404',
       meta: { title: '404' },
-      component: () => import(/* webpackChunkName: "error" */ '../error/404.vue')
+      component: () => import(/* webpackChunkName: "home" */ '../error/404.vue')
     },
     {
       path: '/',
+      name: '/',
       component: PageLayout,
       redirect: { name: 'home' },
       children: [{
         path: 'home',
         name: 'home',
         meta: { title: '首页' },
-        component: (resolve)=> require(['../views/home'], resolve)
-      }, {
+        component: () => import(/* webpackChunkName: "home" */ '../views/home')
+      }, /*{
         path: 'nav1',
         name: 'nav1',
         meta: { title: '导航1' },
@@ -68,7 +68,7 @@ const router = new VueRouter({
           meta: { title: '资源位' },
           component: (resolve)=> require(['../views/nav2/ad/resource'], resolve)
         }]
-      }]
+      }*/]
     },
     {
       path: '*',

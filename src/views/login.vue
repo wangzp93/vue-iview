@@ -13,50 +13,71 @@
           </Input>
         </FormItem>
       </Form>
-      <Button @click="Login" type="primary" class="login-btn">登录</Button>
+      <Button @click="login" type="primary" :loading="btnLoading" class="login-btn">登录</Button>
     </div>
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'Login',
-    data() {
-      return {
-        formData: {
-          username: '',
-          password: ''
-        },
-        rules: {
-          username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
-          password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
+import { mapActions } from 'vuex'
+
+export default {
+  name: 'Login',
+  data() {
+    return {
+      formData: {
+        username: 'zhongpeng.wang',
+        password: '123456'
+      },
+      rules: {
+        username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
+        password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
+      },
+      btnLoading: false
+    }
+  },
+  methods: {
+    ...mapActions([
+      'setUserInfo'
+    ]),
+    /**
+     * 登录
+     */
+    login() {
+      this.$refs.form.validate(valid=> {
+        if (!valid) { return }
+        const params = {
+          ...this.formData
         }
-      }
-    },
-    methods: {
-      login() {
-        this.$router.push({
-          path: '/'
+
+        this.btnLoading = true
+        this.setUserInfo(params).then(()=> {
+          this.$router.push({
+            path: '/'
+          })
+        }).finally(()=> {
+          this.btnLoading = false
         })
-      }
+      })
     }
   }
+}
 </script>
 
-<style lang="less">
-  .wrap {
-    height: 100%;
-    background: #001529;
-    display: flex;
-    align-items: center;
+<style scoped lang="less">
+.wrap {
+  height: 100%;
+  background: #001529;
+  display: flex;
+  align-items: center;
 
-    .content {
-      margin: 0 auto;
-      width: 300px;
-    }
-
-    .login-btn {
-      width: 100%;
-    }
+  .content {
+    margin: 0 auto;
+    width: 300px;
   }
+
+  .login-btn {
+    width: 100%;
+  }
+}
 </style>
