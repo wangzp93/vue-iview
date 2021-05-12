@@ -6,9 +6,11 @@
         <sider-menu :menu-list="menuList"></sider-menu>
       </Menu>
     </div>
-    <!-- 右侧内容区域 -->
+    <!-- 右侧内容 -->
     <div class="page-content-right">
+      <!-- 面包屑 -->
       <div class="breadcrumb">面包屑</div>
+      <!-- 渲染区域 -->
       <div class="page-content">
         <router-view></router-view>
       </div>

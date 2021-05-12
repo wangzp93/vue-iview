@@ -1,6 +1,8 @@
 <template>
   <div class="page-layout">
+    <!-- 头部 -->
     <page-header :active-nav="activeNav" :nav-list="navList"></page-header>
+    <!-- 内容 -->
     <div class="page-layout-content">
       <router-view :menu-list="menuList"></router-view>
     </div>
@@ -18,10 +20,8 @@ export default {
   data() {
     return {
       activeNav: 'home',    // 当前选中的nav
-      // 导航列表
-      navList: Object.freeze([]),
-      // 菜单列表
-      menuList: Object.freeze([])
+      navList: Object.freeze([]), // 导航列表
+      menuList: Object.freeze([]), // 菜单列表
     }
   },
   created() {
@@ -72,10 +72,12 @@ export default {
 </script>
 
 <style scoped lang="less">
+/* 外框 */
 .page-layout {
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* 内容 */
   .page-layout-content {
     flex: 1;
     overflow-y: auto;
