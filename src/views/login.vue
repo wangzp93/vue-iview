@@ -4,12 +4,12 @@
       <Form ref="form" :model="formData" :rules="rules">
         <FormItem prop="username">
           <Input type="text" v-model="formData.username" placeholder="请输入用户名">
-          <Icon type="ios-person-outline" slot="prepend"></Icon>
+            <Icon type="ios-person-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
         <FormItem prop="password">
           <Input type="password" v-model="formData.password" placeholder="请输入密码">
-          <Icon type="ios-lock-outline" slot="prepend"></Icon>
+            <Icon type="ios-lock-outline" slot="prepend"></Icon>
           </Input>
         </FormItem>
       </Form>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { setCookie } from "../utils/cookie";
 
 export default {
   name: 'Login',
@@ -37,9 +37,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions([
-      'setUserInfo'
-    ]),
     /**
      * 登录
      */
@@ -51,12 +48,9 @@ export default {
         }
 
         this.btnLoading = true
-        this.setUserInfo(params).then(()=> {
-          this.$router.push({
-            path: '/'
-          })
-        }).finally(()=> {
-          this.btnLoading = false
+        setCookie('username', params.username)
+        this.$router.push({
+          path: '/'
         })
       })
     }

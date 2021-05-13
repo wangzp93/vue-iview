@@ -16,7 +16,7 @@
     <Dropdown @on-click="onDropClick">
       <div class="user-info">
         <Icon type="md-person" />
-        {{ userInfo.username }}
+        {{ username }}
         <Icon type="ios-arrow-down" />
       </div>
       <DropdownMenu slot="list">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { getCookie, clearCookie } from "../utils/cookie";
 
 export default {
   name: "PageHeader",
@@ -46,15 +46,23 @@ export default {
       required: true
     }
   },
-  computed: {
-    ...mapGetters([
-      'userInfo'
-    ])
+  data() {
+    return {
+      username: ''
+    }
+  },
+  created() {
+    this.initUserInfo()
   },
   methods: {
-    ...mapActions([
-      'setUserInfo'
-    ]),
+    /**
+     * 初始化用户信息
+     */
+    initUserInfo() {
+      const username = getCookie('username')
+      this.username = username
+    },
+
     /**
      * 回到首页
      */
@@ -80,10 +88,9 @@ export default {
      * 退出登录
      */
     logout() {
-      this.setUserInfo({}).then(()=> {
-        this.$router.push({
-          name: 'login'
-        })
+      clearCookie('username')
+      this.$router.push({
+        name: 'login'
       })
     }
   }

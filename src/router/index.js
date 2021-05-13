@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PageLayout from '../layout/PageLayout'
+import { getCookie } from "../utils/cookie";
 
 Vue.use(VueRouter)
 
@@ -34,47 +35,29 @@ const router = new VueRouter({
         name: 'home',
         meta: { title: '首页' },
         component: () => import(/* webpackChunkName: "home" */ '../views/home')
-      }, /*{
-        path: 'nav1',
-        name: 'nav1',
-        meta: { title: '导航1' },
-        component: PageContent,
-        redirect: { name: 'cate' },
-        children: [{
-          path: 'shop/cate',
-          name: 'cate',
-          meta: { title: '商品分类' },
-          component: (resolve)=> require(['../views/nav1/shop/cate'], resolve)
-        }, {
-          path: 'shop/goods',
-          name: 'goods',
-          meta: { title: '商品列表' },
-          component: (resolve)=> require(['../views/nav1/shop/goods'], resolve)
-        }]
-      }, {
-        path: 'nav2',
-        name: 'nav2',
-        meta: { title: '导航2' },
-        component: PageContent,
-        redirect: { name: 'material' },
-        children: [{
-          path: 'ad/material',
-          name: 'material',
-          meta: { title: '素材' },
-          component: (resolve)=> require(['../views/nav2/ad/material'], resolve)
-        }, {
-          path: 'ad/resource',
-          name: 'resource',
-          meta: { title: '资源位' },
-          component: (resolve)=> require(['../views/nav2/ad/resource'], resolve)
-        }]
-      }*/]
+      }]
     },
     {
       path: '*',
       redirect: { name: '404' }
     },
   ]
+})
+
+/**
+ * 路由守卫，根据cookie校验登录状态
+ */
+router.beforeEach((to, from, next)=> {
+  if (to.name === 'login') {
+    next()
+  } else {
+    const username = getCookie('username')
+    if (username) {
+      next()
+    } else {
+      router.push({ name: 'login' })
+    }
+  }
 })
 
 export default router
