@@ -1,11 +1,11 @@
 <template>
-  <div>2-2</div>
+  <div>微信群管理</div>
 </template>
 
 <script>
-  export default {
-    name: "Menu1-1"
-  }
+export default {
+  name: "Group"
+}
 </script>
 
 <style scoped>

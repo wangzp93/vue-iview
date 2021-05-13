@@ -1,66 +1,80 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Frame from '@/views/Frame'
-
-import {navList} from './config'
-
-/**
- * 菜单列表转换为路由
- */
-function menuToRouter(navList, parentPath) {
-  let routerList = []
-  for (let i = 0, len = navList.length; i < len; i++) {
-    let menuItem = navList[i],
-        menuList = menuItem.menuList,
-        routerItem = {
-          path: `${parentPath}/${menuItem.key}`,
-          name: menuItem.key
-        }
-    routerList.push(routerItem)
-    if (menuList && menuList.length > 0) {	// 不是子节点
-      let children = menuToRouter(menuList, routerItem.path)
-      routerItem.redirect = children[0].path
-      routerList = routerList.concat(children)
-    } else {	// 是子节点，路由懒加载
-      routerItem.component = resolve => require([`@/views/${menuItem.path}.vue`], resolve)
-    }
-  }
-  return routerList
-}
-
-const routerList = menuToRouter([], '')
+import PageLayout from '../layout/PageLayout'
 
 Vue.use(VueRouter)
 
 // 解决跳转当前路由报错问题
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function (location) {
-  return originalPush.call(this, location).catch(() => {
-  })
+  return originalPush.call(this, location).catch(() => {})
 }
 
-export default new VueRouter({
+const router = new VueRouter({
   routes: [
     {
       path: '/login',
-      name: 'Login',
+      name: 'login',
       meta: { title: '登录' },
-      component: (resolve)=> require(['@/views/Login'], resolve)
+      component: () => import(/* webpackChunkName: "home" */ '../views/login')
     },
     {
       path: '/404',
       name: '404',
-      component: () => import(/* webpackChunkName: "error" */ '../error/404.vue')
+      meta: { title: '404' },
+      component: () => import(/* webpackChunkName: "home" */ '../error/404.vue')
     },
     {
       path: '/',
-      // redirect: routerList[0].path,
-      component: Frame,
-      children: routerList
+      name: '/',
+      component: PageLayout,
+      redirect: { name: 'home' },
+      children: [{
+        path: 'home',
+        name: 'home',
+        meta: { title: '首页' },
+        component: () => import(/* webpackChunkName: "home" */ '../views/home')
+      }, /*{
+        path: 'nav1',
+        name: 'nav1',
+        meta: { title: '导航1' },
+        component: PageContent,
+        redirect: { name: 'cate' },
+        children: [{
+          path: 'shop/cate',
+          name: 'cate',
+          meta: { title: '商品分类' },
+          component: (resolve)=> require(['../views/nav1/shop/cate'], resolve)
+        }, {
+          path: 'shop/goods',
+          name: 'goods',
+          meta: { title: '商品列表' },
+          component: (resolve)=> require(['../views/nav1/shop/goods'], resolve)
+        }]
+      }, {
+        path: 'nav2',
+        name: 'nav2',
+        meta: { title: '导航2' },
+        component: PageContent,
+        redirect: { name: 'material' },
+        children: [{
+          path: 'ad/material',
+          name: 'material',
+          meta: { title: '素材' },
+          component: (resolve)=> require(['../views/nav2/ad/material'], resolve)
+        }, {
+          path: 'ad/resource',
+          name: 'resource',
+          meta: { title: '资源位' },
+          component: (resolve)=> require(['../views/nav2/ad/resource'], resolve)
+        }]
+      }*/]
     },
     {
       path: '*',
-      redirect: '/404'
+      redirect: { name: '404' }
     },
   ]
 })
+
+export default router

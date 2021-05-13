@@ -1,10 +1,12 @@
 <template>
-  <div>2-3</div>
+  <div>
+    <h1>首页</h1>
+  </div>
 </template>
 
 <script>
   export default {
-    name: "Menu1-1"
+    name: "Home"
   }
 </script>
 
