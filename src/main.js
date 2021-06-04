@@ -6,8 +6,8 @@ import router from './router'
 import store from './store'
 // iview样式
 import 'view-design/dist/styles/iview.css'
-// 自定义主题
-import './style/my-theme/index.less'
+// 自定义iview主题（已通过vue.config.js配置）
+import 'view-design/src/styles/index.less'
 // iview组件
 import {
   Layout, Header, Sider, Content, Footer,
