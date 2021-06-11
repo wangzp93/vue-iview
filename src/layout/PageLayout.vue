@@ -11,6 +11,7 @@
 
 <script>
 import PageHeader from "./PageHeader"
+import navList from "../config/menu"
 
 export default {
   name: 'PageLayout',
@@ -20,13 +21,12 @@ export default {
   data() {
     return {
       activeNav: 'home',    // 当前选中的nav
-      navList: Object.freeze([]), // 导航列表
+      navList: Object.freeze(navList), // 导航列表
       menuList: Object.freeze([]), // 菜单列表
     }
   },
   created() {
     const route = this.$route
-    this.initNav()
     this.onRouteChange(route)
   },
   beforeRouteUpdate(to, from, next) {
@@ -34,14 +34,6 @@ export default {
     next()
   },
   methods: {
-    /**
-     * 初始化导航栏
-     */
-    initNav() {
-      const navList = this.$store.getters.navList
-      this.navList = Object.freeze(navList)
-    },
-
     /**
      * 根据路由渲染导航与菜单
      */
