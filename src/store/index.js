@@ -5,7 +5,6 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    userInfo: {}, // 用户信息
     navList: [{
       name: 'nav1',
       meta: { title: '导航1' },
@@ -51,30 +50,15 @@ const store = new Vuex.Store({
     }]
   },
   getters: {
-    userInfo(state) {
-      return state.userInfo
-    },
     navList(state) {
       return state.navList
     }
   },
   mutations: {
-    setUserInfoSync(state, payload) {
-      state.userInfo = payload
-    }
+
   },
   actions: {
-    /**
-     * 设置用户信息
-     */
-    setUserInfo(context, payload) {
-      return new Promise((r)=> {
-        setTimeout(()=> {
-          context.commit('setUserInfoSync', payload)
-          r()
-        }, 300)
-      })
-    }
+
   }
 })
 
