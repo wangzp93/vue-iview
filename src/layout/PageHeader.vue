@@ -90,7 +90,12 @@ export default {
      * 退出登录
      */
     logout() {
+      // 清除cookie
       clearCookie('username')
+      // 清除session暂存的菜单
+      sessionStorage.removeItem('navList')
+      // 清除vuex菜单数据
+      this.$store.dispatch('setNavList', [])
       this.$router.push({
         name: 'login'
       })
