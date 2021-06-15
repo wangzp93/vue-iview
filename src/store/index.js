@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     menuState: false,   // 菜单状态，false表示未加载，第一次加载时用
-    navList: []
+    navList: Object.freeze([]),
   },
   getters: {
     menuState(state) {

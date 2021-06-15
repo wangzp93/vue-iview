@@ -71,4 +71,9 @@ router.beforeEach((to, from, next)=> {
   }
 })
 
+router.afterEach((to)=> {
+  // 动态设置title
+  document.title = to.meta.title || 'vue-iview'
+})
+
 export default router

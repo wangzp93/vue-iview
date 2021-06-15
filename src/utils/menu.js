@@ -6,7 +6,7 @@ export function addRoutes(router, store) {
     asyncRouter.forEach(item=> {
       router.addRoute('/', item)
     })
-    return store.dispatch('setNavList', navList)
+    return store.dispatch('setNavList', Object.freeze(navList))
   })
 }
 

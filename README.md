@@ -1,24 +1,20 @@
-# vue-iview
-
-## Project setup
+### 动态路由
+```angular2html
+路由守卫beforeEach中，添加动态路由，并保存至vuex中
 ```
-npm install
+```angular2html
+解析navList时，第一级nav，并用router.addRoute挂载在根路由"/"下
 ```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
+```angular2html
+动态路由后next时，需使用replace: true避免白屏
 ```
 
-### Lints and fixes files
-```
-npm run lint
+### 刷新后vuex数据失效
+```angular2html
+页面生命周期beforeunload中，把vuex数据暂存至sessionStorage
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 全局主题
+```angular2html
+vue.config.js中配置css的lessOptions
+```
