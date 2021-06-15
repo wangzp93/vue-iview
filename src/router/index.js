@@ -2,6 +2,8 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PageLayout from '../layout/PageLayout'
 import { getCookie } from "../utils/cookie";
+import store from "../store";
+import { addRoutes } from "../utils/menu";
 
 Vue.use(VueRouter)
 
@@ -37,26 +39,35 @@ const router = new VueRouter({
         component: () => import(/* webpackChunkName: "home" */ '../views/home')
       }]
     },
-    {
-      path: '*',
-      redirect: { name: '404' }
-    },
   ]
 })
 
 /**
- * 路由守卫，根据cookie校验登录状态
+ * 路由守卫，校验cookie、动态路由等
  */
 router.beforeEach((to, from, next)=> {
-  if (to.name === 'login') {
-    next()
-  } else {
+  if (to.name !== 'login') {
+    // 非登录页，校验登录状态
     const username = getCookie('username')
     if (username) {
-      next()
+      // 已登录，校验菜单
+      if (store.getters.menuState) {
+        // 已有菜单路由，放行
+        next()
+      } else {
+        // 动态加载菜单路由
+        addRoutes(router, store).then(()=> {
+          // 使用replace: true，避免第一次加载时白屏
+          next({ ...to, replace: true })
+        })
+      }
     } else {
-      router.push({ name: 'login' })
+      // 未登录，重定向到登录页
+      next({ name: 'login' })
     }
+  } else {
+    // 登录页，直接放行
+    next()
   }
 })
 

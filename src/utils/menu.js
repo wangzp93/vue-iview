@@ -1,4 +1,16 @@
-export function navToRouter(navList = []) {
+import { getMenus } from "../api/menu";
+
+export function addRoutes(router, store) {
+  return getMenus().then(navList=> {
+    const asyncRouter = navToRouter(navList)
+    asyncRouter.forEach(item=> {
+      router.addRoute('/', item)
+    })
+    return store.dispatch('setNavList', navList)
+  })
+}
+
+function navToRouter(navList = []) {
   const routerList = []
   for (let i=0, len=navList.length; i<len; i++) {
     const navItem = navList[i],
@@ -17,6 +29,7 @@ export function navToRouter(navList = []) {
       children
     })
   }
+  routerList.push({ path: '*', redirect: '/404', hidden: true })
   return routerList
 }
 
