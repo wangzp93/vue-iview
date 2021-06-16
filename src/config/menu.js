@@ -1,6 +1,6 @@
 export default [{
   name: 'nav1',
-  meta: { title: '导航1' },
+  meta: { title: '微信公众号管理' },
   icon: 'ios-paper',
   children: [{
     name: 'shop',
@@ -18,10 +18,26 @@ export default [{
         icon: 'ios-paper'
       }
     ]
+  }, {
+    name: 'member',
+    meta: { title: '会员管理' },
+    icon: 'ios-paper',
+    children: [
+      {
+        name: 'member',
+        meta: { title: '会员' },
+        icon: 'ios-paper'
+      },
+      {
+        name: 'userLevel',
+        meta: { title: '会员等级' },
+        icon: 'ios-paper'
+      }
+    ]
   }],
 }, {
   name: 'nav2',
-  meta: { title: '导航2' },
+  meta: { title: '增长运营管理' },
   icon: 'ios-paper',
   children: [{
     name: 'ad',
@@ -36,6 +52,22 @@ export default [{
       {
         name: 'resource',
         meta: { title: '资源位' },
+        icon: 'ios-paper'
+      },
+    ]
+  }, {
+    name: 'wechat',
+    meta: { title: '微信管理' },
+    icon: 'ios-paper',
+    children: [
+      {
+        name: 'account',
+        meta: { title: '微信号管理' },
+        icon: 'ios-paper'
+      },
+      {
+        name: 'group',
+        meta: { title: '微信群管理' },
         icon: 'ios-paper'
       },
     ]

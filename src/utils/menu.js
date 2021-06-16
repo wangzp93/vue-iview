@@ -6,7 +6,9 @@ export function addRoutes(router, store) {
     asyncRouter.forEach(item=> {
       router.addRoute('/', item)
     })
-    return store.dispatch('setNavList', Object.freeze(navList))
+    const p1 = store.dispatch('setMenuState', true),
+      p2 = store.dispatch('setNavList', Object.freeze(navList))
+    return Promise.all([p1, p2])
   })
 }
 

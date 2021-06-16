@@ -95,6 +95,7 @@ export default {
       // 清除session暂存的菜单
       sessionStorage.removeItem('navList')
       // 清除vuex菜单数据
+      this.$store.dispatch('setMenuState', false)
       this.$store.dispatch('setNavList', [])
       this.$router.push({
         name: 'login'

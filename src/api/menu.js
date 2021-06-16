@@ -13,7 +13,7 @@ export function getMenus() {
       navList = NAV_LIST
       setTimeout(()=> {
         resolve(navList)
-      }, 3000)
+      }, 1000)
     }
   })
 }

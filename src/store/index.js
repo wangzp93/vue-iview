@@ -17,12 +17,17 @@ const store = new Vuex.Store({
     }
   },
   mutations: {
+    setMenuStateSync(state, payload) {
+      state.menuState = payload
+    },
     setNavListSync(state, payload) {
-      state.menuState = true
       state.navList = payload
     }
   },
   actions: {
+    setMenuState(context, payload) {
+      context.commit('setMenuStateSync', payload)
+    },
     setNavList(context, payload) {
       context.commit('setNavListSync', payload)
     }

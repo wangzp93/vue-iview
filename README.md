@@ -17,6 +17,7 @@
 
 ### 全局主题
 ```angular2html
-vue.config.js中配置css的lessOptions
+除iview官方文档外，还可在vue.config.js中配置css的lessOptions，
+本次使用后者，因为可以定义全局less变量
 ```
 
