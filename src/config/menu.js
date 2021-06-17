@@ -16,7 +16,7 @@ export default [{
         name: 'goods',
         meta: { title: '商品' },
         icon: 'ios-paper'
-      }
+      },
     ]
   }, {
     name: 'member',
@@ -33,6 +33,22 @@ export default [{
         meta: { title: '会员等级' },
         icon: 'ios-paper'
       }
+    ]
+  }, {
+    name: 'first',
+    meta: { title: 'first' },
+    icon: 'ios-paper',
+    children: [
+      {
+        name: 'second',
+        meta: { title: 'second' },
+        icon: 'ios-paper',
+        children: [{
+          name: 'third',
+          meta: { title: '三级菜单' },
+          icon: 'ios-paper',
+        }]
+      },
     ]
   }],
 }, {
