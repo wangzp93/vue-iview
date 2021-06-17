@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import PageHeader from "./PageHeader"
-import navList from "../config/menu"
+import PageHeader from "./PageHeader";
+import { mapGetters } from "vuex";
 
 export default {
   name: 'PageLayout',
@@ -21,9 +21,11 @@ export default {
   data() {
     return {
       activeNav: 'home',    // 当前选中的nav
-      navList: Object.freeze(navList), // 导航列表
       menuList: Object.freeze([]), // 菜单列表
     }
+  },
+  computed: {
+    ...mapGetters(['navList'])
   },
   created() {
     const route = this.$route

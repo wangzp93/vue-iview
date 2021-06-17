@@ -3,10 +3,8 @@
 </template>
 
 <script>
-
 export default {
   name: 'App',
-  components: {},
   created() {
     window.addEventListener('beforeunload', ()=> {
       // 页面刷新前，vuex数据暂存

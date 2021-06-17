@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import Cookies from 'js-cookie';
+import { mapActions } from "vuex";
+import Cookies from "js-cookie";
 
 export default {
   name: "PageHeader",
@@ -57,6 +58,9 @@ export default {
     this.initUserInfo()
   },
   methods: {
+    ...mapActions([
+      'setMenuState', 'setNavList'
+    ]),
     /**
      * 初始化用户信息
      */
@@ -95,8 +99,9 @@ export default {
       // 清除session暂存的菜单
       sessionStorage.removeItem('navList')
       // 清除vuex菜单数据
-      this.$store.dispatch('setMenuState', false)
-      this.$store.dispatch('setNavList', [])
+      this.setMenuState(false)
+      this.setNavList([])
+      // 跳转登录页
       this.$router.push({
         name: 'login'
       })
