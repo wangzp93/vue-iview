@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { setCookie } from "../utils/cookie";
+import Cookies from 'js-cookie';
 
 export default {
   name: 'Login',
@@ -48,7 +48,7 @@ export default {
         }
 
         this.btnLoading = true
-        setCookie('username', params.username)
+        Cookies.set('username', params.username, { expires: 1 })
         this.$router.push({
           path: '/'
         })

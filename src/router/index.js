@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import PageLayout from '../layout/PageLayout'
-import { getCookie } from "../utils/cookie";
+import Cookies from "js-cookie";
 import store from "../store";
 import { addRoutes } from "../utils/menu";
 
@@ -48,7 +48,7 @@ const router = new VueRouter({
 router.beforeEach((to, from, next)=> {
   if (to.name !== 'login') {
     // 非登录页，校验登录状态
-    const username = getCookie('username')
+    const username = Cookies.get('username')
     if (username) {
       // 已登录，校验菜单
       if (store.getters.menuState) {

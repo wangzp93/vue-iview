@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getCookie, clearCookie } from "../utils/cookie";
+import Cookies from 'js-cookie';
 
 export default {
   name: "PageHeader",
@@ -61,7 +61,7 @@ export default {
      * 初始化用户信息
      */
     initUserInfo() {
-      const username = getCookie('username')
+      const username = Cookies.get('username')
       this.username = username
     },
 
@@ -91,7 +91,7 @@ export default {
      */
     logout() {
       // 清除cookie
-      clearCookie('username')
+      Cookies.remove('username')
       // 清除session暂存的菜单
       sessionStorage.removeItem('navList')
       // 清除vuex菜单数据
