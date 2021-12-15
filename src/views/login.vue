@@ -20,6 +20,7 @@
 
 <script>
 import Cookies from 'js-cookie';
+import { initRoutes } from '@/utils/menu';
 
 export default {
   name: 'Login',
@@ -48,9 +49,20 @@ export default {
         }
 
         this.btnLoading = true
-        Cookies.set('username', params.username, { expires: 1 })
-        this.$router.push({
-          path: '/'
+        // 登录
+        this.$store.dispatch('userModule/login', params).then(({ userInfo, menuData }) => {
+          // 设置cookie
+          Cookies.set('username', userInfo.username, { expires: 1 })
+          return menuData
+        }).then(menuData => {
+          // 初始化菜单和动态路由
+          initRoutes(menuData)
+
+          this.$router.replace({
+            path: '/'
+          })
+        }).finally(() => {
+          this.btnLoading = false
         })
       })
     }

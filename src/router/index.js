@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import PageLayout from '../layout/PageLayout'
+import PageLayout from '@/layout/PageLayout'
 import Cookies from "js-cookie";
-import store from "../store";
-import { addRoutes } from "../utils/menu";
+import store from "@/store";
+import { initRoutes } from "@/utils/menu";
 
 Vue.use(VueRouter)
 
@@ -19,13 +19,13 @@ const router = new VueRouter({
       path: '/login',
       name: 'login',
       meta: { title: '登录' },
-      component: () => import(/* webpackChunkName: "home" */ '../views/login')
+      component: () => import(/* webpackChunkName: "home" */ '@/views/login')
     },
     {
       path: '/404',
       name: '404',
       meta: { title: '404' },
-      component: () => import(/* webpackChunkName: "home" */ '../error/404.vue')
+      component: () => import(/* webpackChunkName: "home" */ '@/error/404.vue')
     },
     {
       path: '/',
@@ -36,7 +36,7 @@ const router = new VueRouter({
         path: 'home',
         name: 'home',
         meta: { title: '首页' },
-        component: () => import(/* webpackChunkName: "home" */ '../views/home')
+        component: () => import(/* webpackChunkName: "home" */ '@/views/home')
       }]
     },
   ]
@@ -51,12 +51,28 @@ router.beforeEach((to, from, next)=> {
     const username = Cookies.get('username')
     if (username) {
       // 已登录，校验菜单
-      if (store.getters.menuState) {
+      if (store.getters['menuModule/getMenuData'].length > 0) {
         // 已有菜单路由，放行
         next()
       } else {
-        // 动态加载菜单路由
-        addRoutes(router, store).then(()=> {
+        new Promise((resolve) => {
+          let menuData = sessionStorage.getItem('menuData')
+
+          // 判断sessionStorage是否存在
+          if (menuData) {
+            // 存在，直接使用
+            sessionStorage.removeItem('menuData') // 清除sessionStorage
+            menuData = JSON.parse(menuData)
+            store.commit('menuModule/setMenuData', menuData)
+            resolve(menuData)
+          } else {
+            // 不存在，调用接口获取
+            return store.dispatch('menuModule/getMenuData')
+          }
+        }).then(menuData => {
+          // 添加动态路由
+          initRoutes(menuData)
+
           // 使用replace: true，避免第一次加载时白屏
           next({ ...to, replace: true })
         })

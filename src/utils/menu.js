@@ -1,26 +1,23 @@
-import { getMenus } from "../api/menu";
+import router from '@/router';
 
-export function addRoutes(router, store) {
-  return getMenus().then(navList=> {
-    const asyncRouter = navToRouter(navList)
-    asyncRouter.forEach(item=> {
-      router.addRoute('/', item)
-    })
-    const p1 = store.dispatch('setMenuState', true),
-      p2 = store.dispatch('setNavList', Object.freeze(navList))
-    return Promise.all([p1, p2])
+export function initRoutes(menuData) {
+  const asyncRoutes = getFirstRoutes(menuData)
+  asyncRoutes.forEach(item=> {
+    router.addRoute('/', item)
   })
 }
 
-function navToRouter(navList = []) {
+/**
+ * 获取一级路由
+ * @param menuData
+ * @returns {*[]}
+ */
+function getFirstRoutes(menuData = []) {
   const routerList = []
-  for (let i=0, len=navList.length; i<len; i++) {
-    const navItem = navList[i],
-      name = navItem.name,
-      meta = navItem.meta,
-      menuList = navItem.children || [],
-      children = menuList.length > 0 ? menuToRouter(menuList, '', name) : [],  // 递归获取子路由
-      redirect = children.length > 0 ? { name: children[0].name } : null  // 重定向子路由第一个
+  for (let i=0, len=menuData.length; i<len; i++) {
+    const { name, meta, children=[] } = menuData[i]
+    const secondRoutes = children.length > 0 ? getSecondRoutes(children, name) : []  // 递归获取子路由
+    const redirect = secondRoutes.length > 0 ? { name: secondRoutes[0].name } : null  // 重定向子路由第一个
 
     routerList.push({
       path: name,
@@ -28,30 +25,37 @@ function navToRouter(navList = []) {
       meta,
       component: (resolve)=> require(['@/layout/PageContent'], resolve),
       redirect,
-      children
+      children: secondRoutes
     })
   }
+
+  // 404路由也要动态添加，需放最后
   routerList.push({ path: '*', redirect: '/404', hidden: true })
   return routerList
 }
 
-function menuToRouter(menuList = [], parentPath = '', nav = '') {
+/**
+ * 获取二级路由
+ * @param secondMenuData
+ * @param firstRouteName
+ * @param parentPath
+ * @returns {*[]}
+ */
+function getSecondRoutes(secondMenuData = [], firstRouteName = '', parentPath) {
   const routerList = []
-  for (let i=0, len=menuList.length; i<len; i++) {
-    const menuItem = menuList[i],
-      name = menuItem.name,
-      path = parentPath + (parentPath ? '/' : '') + name,
-      children = menuItem.children || []
+  for (let i=0, len=secondMenuData.length; i<len; i++) {
+    const { name, meta, children=[] } = secondMenuData[i]
+    const path = (parentPath !== undefined) ? (`${parentPath}/${name}`) : name
     if (children.length > 0) {
       // 子级扁平化
-      const childRouterList = menuToRouter(children, path, nav)
+      const childRouterList = getSecondRoutes(children, firstRouteName, path)
       routerList.push(...childRouterList)
     } else {
       routerList.push({
         path,
         name,
-        meta: menuItem.meta,
-        component: (resolve) => require([`@/views/${nav}/${path}`], resolve)
+        meta,
+        component: (resolve) => require([`@/views/${firstRouteName}/${path}`], resolve)
       })
     }
   }

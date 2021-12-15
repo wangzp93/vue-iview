@@ -11,7 +11,6 @@
 
 <script>
 import PageHeader from "./PageHeader";
-import { mapGetters } from "vuex";
 
 export default {
   name: 'PageLayout',
@@ -25,7 +24,9 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['navList'])
+    navList() {
+      return this.$store.getters['menuModule/getMenuData']
+    }
   },
   created() {
     const route = this.$route

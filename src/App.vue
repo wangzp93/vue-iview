@@ -7,10 +7,13 @@ export default {
   name: 'App',
   created() {
     window.addEventListener('beforeunload', ()=> {
-      // 页面刷新前，vuex数据暂存
-      const navList = this.$store.getters.navList
-      if (navList.length > 0) {
-        sessionStorage.setItem('navList', JSON.stringify(navList))
+      // 判断当前是否是登录页
+      if (this.$route.name !== 'login') {
+        // 非登录页，vuex数据暂存
+        const menuData = this.$store.getters['menuModule/getMenuData']
+        if (menuData.length > 0) {
+          sessionStorage.setItem('menuData', JSON.stringify(menuData))
+        }
       }
     })
   },
