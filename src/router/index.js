@@ -70,7 +70,7 @@ router.beforeEach((to, from, next)=> {
             return store.dispatch('menuModule/getMenuData')
           }
         }).then(menuData => {
-          // 添加动态路由
+          // 初始化动态路由
           initRoutes(menuData)
 
           // 使用replace: true，避免第一次加载时白屏

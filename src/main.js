@@ -1,11 +1,9 @@
 import Vue from 'vue'
 import App from './App.vue'
-// 路由
-import router from './router'
-// vuex
-import store from './store'
-// iview样式
-import 'view-design/dist/styles/iview.css'
+import router from './router' // 路由
+import store from './store' // vuex
+
+import 'view-design/dist/styles/iview.css' // iview样式
 // 自定义iview主题（已通过vue.config.js配置）
 import 'view-design/src/styles/index.less'
 // iview组件

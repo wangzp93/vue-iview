@@ -1,7 +1,7 @@
 <template>
   <div class="page-header">
     <!-- logo -->
-    <img src="../assets/logo.png" class="logo" @click="toHome" alt="">
+    <header-logo />
     <!-- 导航栏 -->
     <div class="nav-page-icon"><Icon type="md-arrow-dropleft" /></div>
     <div class="nav-wrap">
@@ -15,27 +15,20 @@
     </div>
     <div class="nav-page-icon"><Icon type="md-arrow-dropright" /></div>
     <!-- 用户信息 -->
-    <Dropdown @on-click="onDropClick">
-      <div class="user-info">
-        <Icon type="md-person" />
-        {{ username }}
-        <Icon type="ios-arrow-down" />
-      </div>
-      <DropdownMenu slot="list">
-        <DropdownItem name="logout">
-          <Icon type="md-exit" />
-          退出登录
-        </DropdownItem>
-      </DropdownMenu>
-    </Dropdown>
+    <header-user />
   </div>
 </template>
 
 <script>
-import Cookies from "js-cookie";
+import HeaderLogo from './header/Logo';
+import HeaderUser from './header/UserInfo';
 
 export default {
   name: "PageHeader",
+  components: {
+    HeaderLogo,
+    HeaderUser,
+  },
   props: {
     // 当前选中的nav
     activeNav: {
@@ -48,23 +41,7 @@ export default {
       required: true
     }
   },
-  data() {
-    return {
-      username: ''
-    }
-  },
-  created() {
-    this.initUserInfo()
-  },
   methods: {
-    /**
-     * 初始化用户信息
-     */
-    initUserInfo() {
-      const username = Cookies.get('username')
-      this.username = username
-    },
-
     /**
      * 回到首页
      */
@@ -78,25 +55,6 @@ export default {
     toNav(nav) {
       this.$router.push({ name: nav })
     },
-
-    /**
-     * 点击下拉菜单
-     */
-    onDropClick(name) {
-      this[name]()
-    },
-
-    /**
-     * 退出登录
-     */
-    logout() {
-      // 清除cookie
-      Cookies.remove('username')
-      // 跳转登录页
-      this.$router.replace({
-        name: 'login'
-      })
-    }
   }
 }
 </script>
@@ -153,14 +111,6 @@ export default {
     &:hover {
       color: @primary-color;
     }
-  }
-
-  /* 用户信息 */
-  .user-info {
-    line-height: @headerHeight;
-    padding: 0 20px;
-    color: #FFF;
-    cursor: pointer;
   }
 }
 </style>
