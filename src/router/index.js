@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import PageLayout from '@/layout/PageLayout'
 import Cookies from "js-cookie";
 import store from "@/store";
-import { initRoutes } from "@/utils/menu";
+import { initRoutes } from "@/utils/route";
 
 Vue.use(VueRouter)
 
@@ -16,18 +16,6 @@ VueRouter.prototype.push = function (location) {
 const router = new VueRouter({
   routes: [
     {
-      path: '/login',
-      name: 'login',
-      meta: { title: '登录' },
-      component: () => import(/* webpackChunkName: "home" */ '@/views/login')
-    },
-    {
-      path: '/404',
-      name: '404',
-      meta: { title: '404' },
-      component: () => import(/* webpackChunkName: "home" */ '@/error/404.vue')
-    },
-    {
       path: '/',
       name: '/',
       component: PageLayout,
@@ -38,6 +26,18 @@ const router = new VueRouter({
         meta: { title: '首页' },
         component: () => import(/* webpackChunkName: "home" */ '@/views/home')
       }]
+    },
+    {
+      path: '/login',
+      name: 'login',
+      meta: { title: '登录' },
+      component: () => import(/* webpackChunkName: "home" */ '@/views/login')
+    },
+    {
+      path: '/404',
+      name: '404',
+      meta: { title: '404' },
+      component: () => import(/* webpackChunkName: "home" */ '@/error/404.vue')
     },
   ]
 })
@@ -67,14 +67,12 @@ router.beforeEach((to, from, next)=> {
             resolve(menuData)
           } else {
             // 不存在，调用接口获取
-            return store.dispatch('menuModule/getMenuData')
+            resolve(store.dispatch('menuModule/getMenuData'))
           }
         }).then(menuData => {
           // 初始化动态路由
           initRoutes(menuData)
-
-          // 使用replace: true，避免第一次加载时白屏
-          next({ ...to, replace: true })
+          next()
         })
       }
     } else {

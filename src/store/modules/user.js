@@ -2,7 +2,7 @@
  * @author: wangzp
  * @date: 2021-12-15 13:33
  */
-import { login } from '@/api/login';
+import { login } from '@/api/user';
 
 export default {
   namespaced: true,

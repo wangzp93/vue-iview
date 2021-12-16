@@ -20,7 +20,7 @@
 
 <script>
 import Cookies from 'js-cookie';
-import { initRoutes } from '@/utils/menu';
+import { initRoutes } from '@/utils/route';
 
 export default {
   name: 'Login',
