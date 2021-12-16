@@ -21,6 +21,13 @@ module.exports = {
           '^/api': ''    //代理的路径
         }
       },
+      '/video': {
+        target: 'https://img-baofun.zhhainiao.com',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/video': ''    //代理的路径
+        }
+      },
     }
   }
 }
