@@ -72,7 +72,8 @@ router.beforeEach((to, from, next)=> {
         }).then(menuData => {
           // 初始化动态路由
           initRoutes(menuData)
-          next()
+          // 使用replace，避免刷新白屏问题
+          next({...to, replace: true})
         })
       }
     } else {

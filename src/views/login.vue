@@ -34,7 +34,7 @@ export default {
         username: [{required: true, message: '用户名不能为空', trigger: 'blur'}],
         password: [{required: true, message: '密码不能为空', trigger: 'blur'}]
       },
-      btnLoading: false
+      btnLoading: false,
     }
   },
   methods: {
@@ -73,7 +73,10 @@ export default {
 <style scoped lang="less">
 .wrap {
   height: 100%;
-  background: #001529;
+  background-image: url("../assets/bg-img/yanlingji-1.gif");
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 100% 100%;
   display: flex;
   align-items: center;
 

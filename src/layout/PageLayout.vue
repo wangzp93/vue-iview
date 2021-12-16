@@ -3,7 +3,9 @@
     <!-- 头部 -->
     <page-header :active-nav="activeNav" />
     <!-- 内容 -->
-    <router-view :menu-list="menuList" class="layout-content"></router-view>
+    <div class="layout-content">
+      <router-view :menu-list="menuList"></router-view>
+    </div>
   </div>
 </template>
 

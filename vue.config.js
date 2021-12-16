@@ -20,7 +20,7 @@ module.exports = {
         pathRewrite: {
           '^/api': ''    //代理的路径
         }
-      }
+      },
     }
   }
 }
