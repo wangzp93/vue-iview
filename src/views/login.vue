@@ -1,5 +1,14 @@
 <template>
   <div class="wrap">
+    <!-- 动态背景 -->
+    <div class="video-bg">
+      <img class="video" src="../assets/bg-img/yanlingji-1.png" alt="" />
+      <video class="video" autoplay muted loop>
+        <source src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc/preview/f387a74f2c78fffcf0afa3291de9ece8_preview.mp4">
+      </video>
+    </div>
+
+    <!-- 内容 -->
     <div class="content">
       <Form ref="form" :model="formData" :rules="rules">
         <FormItem prop="username">
@@ -73,14 +82,25 @@ export default {
 <style scoped lang="less">
 .wrap {
   height: 100%;
-  background-image: url("../assets/bg-img/yanlingji-1.gif");
-  background-repeat: no-repeat;
-  background-position: 0 0;
-  background-size: 100% 100%;
   display: flex;
   align-items: center;
+  position: relative;
+
+  .video-bg {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    .video {
+      position: absolute;
+      width: 100%;
+    }
+  }
 
   .content {
+    position: relative;
     margin: 0 auto;
     width: 300px;
   }
