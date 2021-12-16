@@ -1,17 +1,18 @@
 <template>
-  <div class="page-content-wrap">
+  <div class="page-content">
     <!-- 左侧菜单栏 -->
-    <div class="page-content-left">
+    <div class="left">
       <Menu ref="menu" :open-names="activeSub" :active-name="activeMenu" width="auto">
-        <sider-menu :menu-list="menuList"></sider-menu>
+        <sider-menu :menu-list="menuList" />
       </Menu>
     </div>
+
     <!-- 右侧内容 -->
-    <div class="page-content-right">
+    <div class="right">
       <!-- 面包屑 -->
       <div class="breadcrumb">面包屑</div>
       <!-- 渲染区域 -->
-      <div class="page-content">
+      <div class="real-content">
         <router-view></router-view>
       </div>
     </div>
@@ -24,7 +25,7 @@ import SiderMenu from "./SiderMenu"
 export default {
   name: "PageContent",
   components: {
-    SiderMenu
+    SiderMenu,
   },
   props: {
     // 菜单列表
@@ -68,16 +69,16 @@ export default {
 
 <style scoped lang="less">
 /* 外框 */
-.page-content-wrap {
+.page-content {
   height: 100%;
   display: flex;
   /* 左侧菜单 */
-  .page-content-left {
+  .left {
     width: 240px;
     overflow-y: auto;
   }
   /* 右侧内容 */
-  .page-content-right {
+  .right {
     flex: 1;
     overflow-y: auto;
     background: #f0f2f5;
@@ -89,7 +90,7 @@ export default {
       margin: 16px 0;
     }
     /* 真实内容区域 */
-    .page-content {
+    .real-content {
       padding: 24px;
       background: #FFF;
       flex: 1;

@@ -19,7 +19,7 @@
 import Cookies from 'js-cookie';
 
 export default {
-  name: 'UserInfo',
+  name: 'HeaderUser',
   data() {
     return {
       username: '',

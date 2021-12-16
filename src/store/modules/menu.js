@@ -8,15 +8,22 @@ export default {
   namespaced: true,
   state: {
     menuData: Object.freeze([]),
+    activeNav: 'home',
   },
   getters: {
     getMenuData(state) {
       return state.menuData
+    },
+    getActiveNav(state) {
+      return state.activeNav
     }
   },
   mutations: {
     setMenuData(state, payload) {
       state.menuData = payload
+    },
+    setActiveNav(state, payload) {
+      state.activeNav = payload
     }
   },
   actions: {

@@ -1,11 +1,9 @@
 <template>
   <div class="page-layout">
     <!-- 头部 -->
-    <page-header :active-nav="activeNav" :nav-list="navList"></page-header>
+    <page-header :active-nav="activeNav" />
     <!-- 内容 -->
-    <div class="page-layout-content">
-      <router-view :menu-list="menuList"></router-view>
-    </div>
+    <router-view :menu-list="menuList" class="layout-content"></router-view>
   </div>
 </template>
 
@@ -15,7 +13,7 @@ import PageHeader from "./PageHeader";
 export default {
   name: 'PageLayout',
   components: {
-    PageHeader
+    PageHeader,
   },
   data() {
     return {
@@ -73,7 +71,7 @@ export default {
   display: flex;
   flex-direction: column;
   /* 内容 */
-  .page-layout-content {
+  .layout-content {
     flex: 1;
     overflow-y: auto;
   }
