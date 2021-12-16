@@ -2,5 +2,6 @@
  * less全局主题
  */
 module.exports = {
-  'primary-color': '#87D068'
+  // 'primary-color': '#87D068',
+  'primary-color': '#C00',
 }

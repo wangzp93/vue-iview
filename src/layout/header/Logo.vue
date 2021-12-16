@@ -1,6 +1,6 @@
 <template>
   <!-- logo -->
-  <img src="@/assets/logo.png"
+  <img src="@/assets/bg-img/welcome.gif"
        class="logo"
        @click="toHome"
        alt="logo"
@@ -30,7 +30,7 @@ export default {
 <style scoped>
 /* logo */
 .logo {
-  width: 200px;
+  width: 240px;
   cursor: pointer;
 }
 </style>

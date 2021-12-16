@@ -2,7 +2,7 @@
   <div class="wrap">
     <!-- 动态背景 -->
     <div class="video-bg">
-      <img class="video" src="../assets/bg-img/yanlingji-1.png" alt="" />
+      <img class="video" src="@/assets/bg-img/yanlingji-1.png" alt="" />
       <video class="video" autoplay muted loop>
         <source src="https://img-baofun.zhhainiao.com/pcwallpaper_ugc/preview/f387a74f2c78fffcf0afa3291de9ece8_preview.mp4">
       </video>

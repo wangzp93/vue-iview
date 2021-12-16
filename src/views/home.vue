@@ -1,10 +1,9 @@
 <template>
   <div class="home">
-    <img class="video" src="../assets/bg-img/yanlingji-2.png" alt="" />
+    <img class="video" src="@/assets/bg-img/yanlingji-2.png" alt="" />
     <video class="video" autoplay muted loop>
       <source src="https://img-baofun.zhhainiao.com/fs/live/preview_video/65c507fbba6f35db58c557245913013a_preview.mp4">
     </video>
-    <img class="welcome" src="../assets/bg-img/welcome.gif" alt="" />
   </div>
 </template>
 
@@ -28,12 +27,6 @@
 <style scoped lang="less">
 .home {
   position: relative;
-  .welcome {
-    position: absolute;
-    left: 26%;
-    top: 40px;
-    width: 400px;
-  }
   .video {
     position: absolute;
     width: 100%;
