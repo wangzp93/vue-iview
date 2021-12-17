@@ -10,12 +10,6 @@
 <script>
 export default {
   name: 'HeaderLogo',
-  props: {
-    src: {
-      type: String,
-      default: '',
-    },
-  },
   methods: {
     /**
      * 回到首页

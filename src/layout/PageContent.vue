@@ -2,7 +2,7 @@
   <div class="page-content">
     <!-- 左侧菜单栏 -->
     <div class="left">
-      <Menu ref="menu" :open-names="activeSub" :active-name="activeMenu" width="auto">
+      <Menu ref="menu" :open-names="activeMenu.subs" :active-name="activeMenu.name" width="auto">
         <sider-menu :menu-list="menuList" />
       </Menu>
     </div>
@@ -27,43 +27,20 @@ export default {
   components: {
     SiderMenu,
   },
-  props: {
+  computed: {
     // 菜单列表
-    menuList: {
-      type: Array,
-      required: true
-    }
-  },
-  data() {
-    return {
-      activeSub: Object.freeze([]),   // 展开的目录
-      activeMenu: '',   // 选中的菜单
-    }
-  },
-  created() {
-    this.onRouteChange()
-  },
-  beforeUpdate() {
-    this.onRouteChange()
-  },
-  methods: {
-    /**
-     * 根据路由变化渲染菜单
-     */
-    onRouteChange() {
-      const route = this.$route
-      const path = route.path.replace('/', ''),
-        pathArr = path.split('/')
-      pathArr.shift()   // 去掉导航
-      this.activeMenu = pathArr.pop()   // 选中的菜单
-      this.activeSub = Object.freeze(pathArr)    // 展开的目录
-      // 手动刷新菜单
+    menuList() {
+      return this.$store.getters['menuModule/getMenuList']
+    },
+    // 选中的菜单
+    activeMenu() {
       this.$nextTick(()=> {
         this.$refs.menu.updateOpened()
         this.$refs.menu.updateActiveName()
       })
+      return this.$store.getters['menuModule/getActiveMenu']
     }
-  }
+  },
 }
 </script>
 

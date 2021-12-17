@@ -19,9 +19,11 @@
 export default {
   name: 'HeaderNav',
   computed: {
+    // 导航列表
     navList() {
       return this.$store.getters['menuModule/getMenuData']
     },
+    // 选中的导航
     activeNav() {
       return this.$store.getters['menuModule/getActiveNav']
     }

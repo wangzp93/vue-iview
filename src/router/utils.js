@@ -76,9 +76,16 @@ export function setActiveByPath(store, path) {
   path = path.replace('/', '') // 先去除第一个/
   var list = path.split('/')
 
-  let oldActive= store.getters['menuModule/getActiveNav']
-  let activeNav = list[0]
-  if (oldActive !== activeNav) {
-    store.commit('menuModule/setActiveNav', activeNav)
+  // 选中的导航
+  let activeNav = list.shift()
+  store.commit('menuModule/setActiveNav', activeNav)
+
+  // 选中的菜单
+  let activeMenu = list.pop()
+  if (activeMenu) {
+    store.commit('menuModule/setActiveMenu', {
+      subs: list, // 展开的菜单
+      name: activeMenu, // 选中的菜单
+    })
   }
 }
