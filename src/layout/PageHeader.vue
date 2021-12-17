@@ -28,7 +28,7 @@ export default {
 // 导航栏高度
 .page-header {
   display: flex;
-  height: 64px;
+  height: @nav-height;
   padding-right: 24px;
   background: #001529;
   user-select: none;

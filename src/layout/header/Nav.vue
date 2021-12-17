@@ -51,10 +51,8 @@ export default {
     overflow-x: auto;
 
     .nav-item {
-      display: flex;
-      justify-content: center;
-      align-items: center;
       padding: 0 20px;
+      line-height: @nav-height;
       color: rgba(255, 255, 255, 0.65);
       cursor: pointer;
       &.active {
@@ -66,7 +64,7 @@ export default {
       }
 
       .nav-text {
-        margin-left: 6px;
+        margin-left: 4px;
       }
     }
   }

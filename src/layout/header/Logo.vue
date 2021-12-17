@@ -21,10 +21,10 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="less">
 /* logo */
 .logo {
-  width: 240px;
+  width: @menu-width;
   cursor: pointer;
 }
 </style>

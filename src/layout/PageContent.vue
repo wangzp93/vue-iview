@@ -51,7 +51,7 @@ export default {
   display: flex;
   /* 左侧菜单 */
   .left {
-    width: 240px;
+    width: @menu-width;
     overflow-y: auto;
   }
   /* 右侧内容 */

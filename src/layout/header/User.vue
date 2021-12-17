@@ -69,9 +69,8 @@ export default {
 .user-info {
   margin-left: 20px;
   width: @userWidth;
-  display: flex;
-  align-items: center;
-  height: 64px;
+  height: @nav-height;
+  line-height: @nav-height;
   color: #FFF;
   cursor: pointer;
 
