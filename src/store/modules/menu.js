@@ -7,7 +7,7 @@ import { getMenuData } from '@/api/menu';
 export default {
   namespaced: true,
   state: {
-    menuData: Object.freeze([]),
+    menuData: Object.freeze(sessionStorage.getItem('menuData') ? JSON.parse(sessionStorage.getItem('menuData')) : []),
     activeNav: 'home',
   },
   getters: {
@@ -20,6 +20,7 @@ export default {
   },
   mutations: {
     setMenuData(state, payload) {
+      sessionStorage.setItem('menuData', JSON.stringify(payload))
       state.menuData = payload
     },
     setActiveNav(state, payload) {

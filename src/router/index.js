@@ -50,25 +50,14 @@ router.beforeEach((to, from, next)=> {
     // 非登录页，校验登录状态
     const username = Cookies.get('username')
     if (username) {
-      // 已登录，校验菜单
-      if (store.getters['menuModule/getMenuData'].length > 0) {
+      // 已登录，校验当前路由个数，初始路由个数为4
+      if (router.getRoutes().length > 4) {
         // 已有菜单路由，放行
         next()
       } else {
         new Promise((resolve) => {
-          let menuData = sessionStorage.getItem('menuData')
-
-          // 判断sessionStorage是否存在
-          if (menuData) {
-            // 存在，直接使用
-            sessionStorage.removeItem('menuData') // 清除sessionStorage
-            menuData = JSON.parse(menuData)
-            store.commit('menuModule/setMenuData', menuData)
-            resolve(menuData)
-          } else {
-            // 不存在，调用接口获取
-            resolve(store.dispatch('menuModule/getMenuData'))
-          }
+          let menuData = store.getters['menuModule/getMenuData']
+          resolve(menuData.length > 0 ? menuData : store.dispatch('menuModule/getMenuData'))
         }).then(menuData => {
           // 初始化动态路由
           initRoutes(menuData)

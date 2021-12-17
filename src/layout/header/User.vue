@@ -48,11 +48,14 @@ export default {
      * 退出登录
      */
     logout() {
-      // 清除cookie
-      Cookies.remove('username')
+      Cookies.remove('username') // 清除cookie
+      sessionStorage.clear() // 清除所有sessionStorage
       // 跳转登录页
       this.$router.replace({
         name: 'login'
+      })
+      setTimeout(function() {
+        window.location.reload()
       })
     }
   }
