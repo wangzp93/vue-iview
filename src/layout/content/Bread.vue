@@ -3,7 +3,7 @@
     <Breadcrumb>
       <BreadcrumbItem v-for="item in breadList"
                       :key="item.name"
-                      :to="item.name"
+                      :to="item.name ? {name: item.name}: ''"
       >
         {{ item.text }}
       </BreadcrumbItem>

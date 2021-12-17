@@ -66,6 +66,7 @@ export default {
   }
 }
 
+// 生成菜单数据字典
 function menuToDict(menuDict, menuData, deep = 0) {
   for (let i=0, len=menuData.length; i<len; i++) {
     let { name, children, meta } = menuData[i]

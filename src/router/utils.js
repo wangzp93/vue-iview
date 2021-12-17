@@ -24,11 +24,12 @@ function getFirstRoutes(menuData = []) {
   const routerList = []
   for (let i=0, len=menuData.length; i<len; i++) {
     const { name, meta, children=[] } = menuData[i]
-    const secondRoutes = children.length > 0 ? getSecondRoutes(children, name) : []  // 递归获取子路由
+    const path = `/${name}`
+    const secondRoutes = children.length > 0 ? getSecondRoutes(children, path) : []  // 递归获取子路由
     const redirect = secondRoutes.length > 0 ? { name: secondRoutes[0].name } : null  // 重定向子路由第一个
 
     routerList.push({
-      path: name,
+      path,
       name,
       meta,
       component: (resolve)=> require(['@/layout/PageContent'], resolve),
@@ -42,25 +43,24 @@ function getFirstRoutes(menuData = []) {
 /**
  * 获取二级路由
  * @param secondMenuData
- * @param firstRouteName
  * @param parentPath
  * @returns {*[]}
  */
-function getSecondRoutes(secondMenuData = [], firstRouteName = '', parentPath) {
+function getSecondRoutes(secondMenuData = [], parentPath) {
   const routerList = []
   for (let i=0, len=secondMenuData.length; i<len; i++) {
     const { name, meta, children=[] } = secondMenuData[i]
-    const path = (parentPath !== undefined) ? (`${parentPath}/${name}`) : name
+    const path = `${parentPath}/${name}`
     if (children.length > 0) {
       // 子级扁平化
-      const childRouterList = getSecondRoutes(children, firstRouteName, path)
+      const childRouterList = getSecondRoutes(children, path)
       routerList.push(...childRouterList)
     } else {
       routerList.push({
         path,
         name,
         meta,
-        component: (resolve) => require([`@/views/${firstRouteName}/${path}`], resolve)
+        component: (resolve) => require([`@/views${path}`], resolve)
       })
     }
   }
@@ -99,12 +99,12 @@ export function setActiveByPath(store, path) {
       let item = list[i]
       menuDict = menuDict[item]
       breadList.push({
-        name: item,
+        // name: item,
         text: menuDict.text,
       })
     }
     breadList.push({
-      name: activeMenu,
+      // name: activeMenu,
       text: menuDict[activeMenu].text,
     })
     store.commit('menuModule/setBreadList', breadList)
