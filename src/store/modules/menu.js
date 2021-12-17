@@ -23,7 +23,7 @@ export default {
     // 菜单数据字典
     getMenuDict(state) {
       let menuDict = {}
-      menuToDict(menuDict, state.menuData)
+      menuToDict1(menuDict, state.menuData)
       return menuDict
     },
     getActiveNav(state) {
@@ -85,5 +85,24 @@ function menuToDict(menuDict, menuData, deep = 0) {
     }
 
     menuDict[name] = itemDict
+  }
+}
+function menuToDict1(menuDict, menuData, parent = '') {
+  for (let i=0, len=menuData.length; i<len; i++) {
+    let { name, children, meta } = menuData[i]
+    let key = parent ? `${parent}/${name}` : name
+    let itemDict = {
+      text: meta.title,
+    }
+    // 如果是第一层，存储子内容
+    if (parent === '') {
+      itemDict.children = children
+    }
+    menuDict[key] = itemDict
+
+    // 有子节点，递归
+    if (Array.isArray(children)) {
+      menuToDict1(menuDict, children, key)
+    }
   }
 }

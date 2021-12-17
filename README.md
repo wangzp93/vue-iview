@@ -37,6 +37,9 @@ state: {
 
 ### 编辑或详情页面，菜单高亮问题
 
+### 菜单key问题
+避免key重复，使用路径拼接形式，如：nav/first/second/leaf，开头不带/
+
 ### 全局主题
 除iview官方文档外，还可在vue.config.js中配置css的lessOptions，
 本次使用后者，因为可以定义全局less变量

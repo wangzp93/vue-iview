@@ -86,32 +86,31 @@ export function setActiveByPath(store, path) {
 
     // 面包屑
     let menuDict = store.getters['menuModule/getMenuDict']
-    menuDict = menuDict[activeNav]
     const breadList = [{
       name: activeNav,
-      text: menuDict.text,
+      text: menuDict[activeNav].text,
     }]
 
     let currentPath = activeNav
     for (let i=0, len=list.length; i<len; i++) {
       let item = list[i]
-
       // 选中的菜单
-      menuDict = menuDict[item]
       currentPath = `${currentPath}/${item}` // nav1/first/second
       subs.push(currentPath)
 
       // 面包屑
       breadList.push({
-        text: menuDict.text,
+        text: menuDict[currentPath].text,
       })
     }
+
+    let fullActiveMenu = `${currentPath}/${activeMenu}` // 选中的菜单 nav1/first/second/leaf
     breadList.push({
-      text: menuDict[activeMenu].text,
+      text: menuDict[fullActiveMenu].text,
     })
     store.commit('menuModule/setActiveMenu', {
       subs, // 展开的菜单
-      name: `${currentPath}/${activeMenu}`, // 选中的菜单 nav1/first/second/leaf
+      name: fullActiveMenu,
     })
     store.commit('menuModule/setBreadList', breadList)
   }
