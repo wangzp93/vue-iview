@@ -82,10 +82,7 @@ export function setActiveByPath(store, path) {
   let activeMenu = list.pop()
   if (activeMenu) {
     // 选中的菜单
-    store.commit('menuModule/setActiveMenu', {
-      subs: list, // 展开的菜单
-      name: activeMenu, // 选中的菜单
-    })
+    const subs = []
 
     // 面包屑
     let menuDict = store.getters['menuModule/getMenuDict']
@@ -95,17 +92,26 @@ export function setActiveByPath(store, path) {
       text: menuDict.text,
     }]
 
+    let currentPath = activeNav
     for (let i=0, len=list.length; i<len; i++) {
       let item = list[i]
+
+      // 选中的菜单
       menuDict = menuDict[item]
+      currentPath = `${currentPath}/${item}` // nav1/first/second
+      subs.push(currentPath)
+
+      // 面包屑
       breadList.push({
-        // name: item,
         text: menuDict.text,
       })
     }
     breadList.push({
-      // name: activeMenu,
       text: menuDict[activeMenu].text,
+    })
+    store.commit('menuModule/setActiveMenu', {
+      subs, // 展开的菜单
+      name: `${currentPath}/${activeMenu}`, // 选中的菜单 nav1/first/second/leaf
     })
     store.commit('menuModule/setBreadList', breadList)
   }

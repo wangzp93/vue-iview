@@ -1,6 +1,6 @@
 <template>
   <Menu ref="menu" :open-names="activeMenu.subs" :active-name="activeMenu.name" width="auto">
-    <sider-menu :menu-list="menuList" />
+    <sider-menu :menu-list="menuList" :parent-name="activeNav" />
   </Menu>
 </template>
 
@@ -15,6 +15,10 @@ export default {
     SiderMenu,
   },
   computed: {
+    // 选中的导航
+    activeNav() {
+      return this.$store.getters['menuModule/getActiveNav']
+    },
     // 菜单列表
     menuList() {
       return this.$store.getters['menuModule/getMenuList']

@@ -2,17 +2,22 @@
     <div>
       <template v-for="item in menuList">
         <!-- 目录 -->
-        <Submenu v-if="item.children" :name="item.name" :key="item.name">
+        <Submenu v-if="item.children"
+                 :name="formatKey(item.name)"
+                 :key="formatKey(item.name)"
+        >
           <template slot="title">
             <Icon :type="item.icon" />
             {{ item.meta.title }}
           </template>
           <!-- 递归 -->
-          <sider-menu :menu-list="item.children"></sider-menu>
+          <sider-menu :menu-list="item.children" :parent-name="formatKey(item.name)"></sider-menu>
         </Submenu>
         <!-- 叶子节点 -->
-        <MenuItem v-else :to="{name: item.name}"
-                  :name="item.name" :key="item.name"
+        <MenuItem v-else
+                  :to="'/' + formatKey(item.name)"
+                  :name="formatKey(item.name)"
+                  :key="formatKey(item.name)"
         >
           <Icon :type="item.icon" />
           {{ item.meta.title }}
@@ -34,9 +39,22 @@ export default {
     // 菜单列表
     menuList: {
       type: Array,
-      required: true
+      required: true,
+    },
+    // 父级名称
+    parentName: {
+      type: String,
+      required: true,
     }
-  }
+  },
+  methods: {
+    /**
+     * 菜单key，nav1/first/second 形式
+     */
+    formatKey(name) {
+      return `${this.parentName}/${name}`
+    }
+  },
 }
 </script>
 
