@@ -16,10 +16,16 @@
 </template>
 
 <script>
+import { Dropdown, DropdownMenu, DropdownItem } from 'view-design';
 import Cookies from 'js-cookie';
 
 export default {
   name: 'HeaderUser',
+  components: {
+    Dropdown,
+    DropdownMenu,
+    DropdownItem,
+  },
   data() {
     return {
       username: '',

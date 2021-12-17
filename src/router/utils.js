@@ -11,6 +11,8 @@ export function initRoutes(router, menuData) {
   asyncRoutes.forEach(item=> {
     router.addRoute('/', item)
   })
+  // 默认404，需放最后
+  router.addRoute('/', { path: '*', redirect: '/404', hidden: true })
 }
 
 /**
@@ -34,9 +36,6 @@ function getFirstRoutes(menuData = []) {
       children: secondRoutes
     })
   }
-
-  // 404路由也要动态添加，需放最后
-  routerList.push({ path: '*', redirect: '/404', hidden: true })
   return routerList
 }
 
@@ -69,23 +68,45 @@ function getSecondRoutes(secondMenuData = [], firstRouteName = '', parentPath) {
 }
 
 /**
- * 根据路由地址，设置导航菜单高亮
+ * 根据路由地址，设置导航菜单高亮、面包屑等
  * @param path
  */
 export function setActiveByPath(store, path) {
   path = path.replace('/', '') // 先去除第一个/
-  var list = path.split('/')
+  let list = path.split('/');
 
   // 选中的导航
   let activeNav = list.shift()
   store.commit('menuModule/setActiveNav', activeNav)
 
-  // 选中的菜单
   let activeMenu = list.pop()
   if (activeMenu) {
+    // 选中的菜单
     store.commit('menuModule/setActiveMenu', {
       subs: list, // 展开的菜单
       name: activeMenu, // 选中的菜单
     })
+
+    // 面包屑
+    let menuDict = store.getters['menuModule/getMenuDict']
+    menuDict = menuDict[activeNav]
+    const breadList = [{
+      name: activeNav,
+      text: menuDict.text,
+    }]
+
+    for (let i=0, len=list.length; i<len; i++) {
+      let item = list[i]
+      menuDict = menuDict[item]
+      breadList.push({
+        name: item,
+        text: menuDict.text,
+      })
+    }
+    breadList.push({
+      name: activeMenu,
+      text: menuDict[activeMenu].text,
+    })
+    store.commit('menuModule/setBreadList', breadList)
   }
 }

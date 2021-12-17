@@ -20,8 +20,8 @@ const store = new Vuex.Store({
 
   },
   modules: {
-    userModule,
-    menuModule,
+    userModule, // 用户
+    menuModule, // 菜单
   }
 })
 

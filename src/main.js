@@ -8,32 +8,14 @@ import 'view-design/dist/styles/iview.css' // iview样式
 import 'view-design/src/styles/index.less'
 // iview组件
 import {
-  Layout, Header, Sider, Content, Footer,
-  Menu, Submenu, MenuGroup, MenuItem, Icon,
-  Dropdown, DropdownMenu, DropdownItem,
-  Form, FormItem, Input, Button,
+  Form, FormItem, Input, Button, Icon,
 } from 'view-design'
-
-Vue.component('Layout', Layout)
-Vue.component('Header', Header)
-Vue.component('Sider', Sider)
-Vue.component('Content', Content)
-Vue.component('Footer', Footer)
-
-Vue.component('Menu', Menu)
-Vue.component('Submenu', Submenu)
-Vue.component('MenuGroup', MenuGroup)
-Vue.component('MenuItem', MenuItem)
-Vue.component('Icon', Icon)
-
-Vue.component('Dropdown', Dropdown)
-Vue.component('DropdownMenu', DropdownMenu)
-Vue.component('DropdownItem', DropdownItem)
 
 Vue.component('Form', Form)
 Vue.component('FormItem', FormItem)
 Vue.component('Input', Input)
 Vue.component('Button', Button)
+Vue.component('Icon', Icon)
 
 // 阻止启动时生成生产提示
 Vue.config.productionTip = false

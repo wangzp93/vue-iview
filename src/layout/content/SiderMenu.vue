@@ -22,8 +22,14 @@
 </template>
 
 <script>
+import { Submenu, MenuItem } from 'view-design';
+
 export default {
   name: "SiderMenu",
+  components: {
+    Submenu,
+    MenuItem,
+  },
   props: {
     // 菜单列表
     menuList: {

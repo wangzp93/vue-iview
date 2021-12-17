@@ -2,15 +2,13 @@
   <div class="page-content">
     <!-- 左侧菜单栏 -->
     <div class="left">
-      <Menu ref="menu" :open-names="activeMenu.subs" :active-name="activeMenu.name" width="auto">
-        <sider-menu :menu-list="menuList" />
-      </Menu>
+      <content-menu />
     </div>
 
     <!-- 右侧内容 -->
     <div class="right">
       <!-- 面包屑 -->
-      <div class="breadcrumb">面包屑</div>
+      <content-bread />
       <!-- 渲染区域 -->
       <div class="real-content">
         <router-view></router-view>
@@ -20,26 +18,14 @@
 </template>
 
 <script>
-import SiderMenu from "./SiderMenu"
+import ContentMenu from './content/Menu';
+import ContentBread from './content/Bread';
 
 export default {
   name: "PageContent",
   components: {
-    SiderMenu,
-  },
-  computed: {
-    // 菜单列表
-    menuList() {
-      return this.$store.getters['menuModule/getMenuList']
-    },
-    // 选中的菜单
-    activeMenu() {
-      this.$nextTick(()=> {
-        this.$refs.menu.updateOpened()
-        this.$refs.menu.updateActiveName()
-      })
-      return this.$store.getters['menuModule/getActiveMenu']
-    }
+    ContentMenu,
+    ContentBread,
   },
 }
 </script>

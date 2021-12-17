@@ -15,7 +15,7 @@ export default {
   actions: {
     login(context, payload) {
       return login(payload).then(res => {
-        context.commit('menuModule/setMenuData', Object.freeze(res.menuData), { root: true })
+        context.commit('menuModule/setMenuData', res.menuData, { root: true })
         return res
       })
     }

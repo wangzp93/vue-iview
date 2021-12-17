@@ -13,44 +13,76 @@ export default {
     activeMenu: Object.freeze({
       subs: [],   // 当前展开目录
       name: '', // 当前菜单
-    })
+    }),
+    breadList: Object.freeze([]), // 面包屑
   },
   getters: {
     getMenuData(state) {
       return state.menuData
     },
+    // 菜单数据字典
+    getMenuDict(state) {
+      let menuDict = {}
+      menuToDict(menuDict, state.menuData)
+      return menuDict
+    },
     getActiveNav(state) {
       return state.activeNav
     },
-    getMenuList(state) {
-      const { menuData, activeNav } = state
-      const navIndex = menuData.findIndex((item)=> {
-        return item.name === activeNav
-      })
-      return navIndex >= 0 ? menuData[navIndex].children : []
+    getMenuList(state, getters) {
+      const { activeNav } = state
+      const menuDict = getters.getMenuDict
+      return menuDict.hasOwnProperty(activeNav) ? menuDict[activeNav].children : []
     },
     getActiveMenu(state) {
       return state.activeMenu
     },
+    getBreadList(state) {
+      return state.breadList
+    }
   },
   mutations: {
     setMenuData(state, payload) {
       sessionStorage.setItem('menuData', JSON.stringify(payload))
-      state.menuData = payload
+      state.menuData = Object.freeze(payload)
     },
     setActiveNav(state, payload) {
       state.activeNav = payload
     },
     setActiveMenu(state, payload) {
-      state.activeMenu = payload
+      state.activeMenu = Object.freeze(payload)
+    },
+    setBreadList(state, payload) {
+      state.breadList = Object.freeze(payload)
     }
   },
   actions: {
     getMenuData(context) {
       return getMenuData().then(menuData => {
-        context.commit('setMenuData', Object.freeze(menuData))
+        context.commit('setMenuData', menuData)
         return menuData
       })
     }
+  }
+}
+
+function menuToDict(menuDict, menuData, deep = 0) {
+  for (let i=0, len=menuData.length; i<len; i++) {
+    let { name, children, meta } = menuData[i]
+    var itemDict = {
+      text: meta.title,
+    }
+
+    // 如果是第一层，存储子内容
+    if (deep === 0) {
+      itemDict.children = children
+    }
+
+    // 有子节点，递归
+    if (Array.isArray(children)) {
+      menuToDict(itemDict, children, deep+1)
+    }
+
+    menuDict[name] = itemDict
   }
 }
