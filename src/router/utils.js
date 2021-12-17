@@ -1,6 +1,12 @@
-import router from '@/router';
-
-export function initRoutes(menuData) {
+/**
+ * @author: wangzp
+ * @date: 2021-12-17 18:18
+ */
+/**
+ * 初始化动态路由
+ * @param menuData
+ */
+export function initRoutes(router, menuData) {
   const asyncRoutes = getFirstRoutes(menuData)
   asyncRoutes.forEach(item=> {
     router.addRoute('/', item)
@@ -60,4 +66,19 @@ function getSecondRoutes(secondMenuData = [], firstRouteName = '', parentPath) {
     }
   }
   return routerList
+}
+
+/**
+ * 根据路由地址，设置导航菜单高亮
+ * @param path
+ */
+export function setActiveByPath(store, path) {
+  path = path.replace('/', '') // 先去除第一个/
+  var list = path.split('/')
+
+  let oldActive= store.getters['menuModule/getActiveNav']
+  let activeNav = list[0]
+  if (oldActive !== activeNav) {
+    store.commit('menuModule/setActiveNav', activeNav)
+  }
 }

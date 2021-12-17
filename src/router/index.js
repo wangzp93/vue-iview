@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import PageLayout from '@/layout/PageLayout'
 import Cookies from "js-cookie";
 import store from "@/store";
-import { initRoutes } from "@/utils/route";
+import { initRoutes, setActiveByPath } from "@/router/utils";
 
 Vue.use(VueRouter)
 
@@ -60,11 +60,14 @@ router.beforeEach((to, from, next)=> {
           resolve(menuData.length > 0 ? menuData : store.dispatch('menuModule/getMenuData'))
         }).then(menuData => {
           // 初始化动态路由
-          initRoutes(menuData)
+          initRoutes(router, menuData)
           // 使用replace，避免刷新白屏问题
           next({...to, replace: true})
         })
       }
+
+      // 设置菜单高亮
+      setActiveByPath(store, to.fullPath)
     } else {
       // 未登录，重定向到登录页
       next({ name: 'login' })

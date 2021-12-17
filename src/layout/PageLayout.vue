@@ -1,7 +1,7 @@
 <template>
   <div class="page-layout">
     <!-- 头部 -->
-    <page-header :active-nav="activeNav" />
+    <page-header />
     <!-- 内容 -->
     <div class="layout-content">
       <router-view :menu-list="menuList"></router-view>

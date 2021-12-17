@@ -3,7 +3,7 @@
     <!-- logo -->
     <header-logo />
     <!-- 导航栏 -->
-    <header-nav :active-nav="activeNav" />
+    <header-nav />
     <!-- 用户信息 -->
     <header-user />
   </div>
@@ -20,13 +20,6 @@ export default {
     HeaderLogo,
     HeaderNav,
     HeaderUser,
-  },
-  props: {
-    // 当前选中的nav
-    activeNav: {
-      type: String,
-      required: true
-    },
   },
 }
 </script>

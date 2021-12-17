@@ -29,7 +29,7 @@
 
 <script>
 import Cookies from 'js-cookie';
-import { initRoutes } from '@/utils/route';
+import { initRoutes } from '@/router/utils';
 
 export default {
   name: 'Login',
@@ -65,7 +65,7 @@ export default {
           return menuData
         }).then(menuData => {
           // 初始化菜单和动态路由
-          initRoutes(menuData)
+          initRoutes(this.$router, menuData)
 
           this.$router.replace({
             path: '/'

@@ -18,16 +18,12 @@
 <script>
 export default {
   name: 'HeaderNav',
-  props: {
-    // 当前选中的nav
-    activeNav: {
-      type: String,
-      required: true
-    },
-  },
   computed: {
     navList() {
       return this.$store.getters['menuModule/getMenuData']
+    },
+    activeNav() {
+      return this.$store.getters['menuModule/getActiveNav']
     }
   },
   methods: {
