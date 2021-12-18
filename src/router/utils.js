@@ -83,7 +83,7 @@ export function setActiveByPath(store, path) {
   if (leaf) {
     let menuDict = store.getters['menuModule/getMenuDict']
 
-    // 选中的菜单
+    // 展开的菜单
     const subs = []
     // 面包屑
     const breadList = [{
@@ -94,7 +94,7 @@ export function setActiveByPath(store, path) {
     for (let i=0, len=list.length; i<len; i++) {
       let item = list[i]
 
-      // 选中的菜单
+      // 展开的菜单
       currentKey = `${currentKey}/${item}` // nav1/first/second
       subs.push(currentKey)
       // 面包屑

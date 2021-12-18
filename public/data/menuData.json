@@ -1,5 +1,21 @@
 [
   {
+    "name": "nav3",
+    "meta": {
+      "title": "增长运营管理33333333333"
+    },
+    "icon": "ios-paper",
+    "children": [
+      {"name": "ad","meta": {"title": "广告管理"},"icon": "ios-paper"},
+      {"name": "wechat","meta": {"title": "微信管理"},"icon": "ios-paper"}
+    ]
+  },
+  {
+    "name": "nav1",
+    "meta": {
+      "title": "微信公众号管理"
+    },
+    "icon": "ios-paper",
     "children": [
       {
         "name": "shop",
@@ -72,12 +88,7 @@
           }
         ]
       }
-    ],
-    "icon": "ios-paper",
-    "meta": {
-      "title": "微信公众号管理"
-    },
-    "name": "nav1"
+    ]
   },
   {
     "name": "nav2",
@@ -132,6 +143,50 @@
           }
         ]
       }
+    ]
+  },
+  {
+    "name": "nav4",
+    "meta": {
+      "title": "增长运营管理44444444"
+    },
+    "icon": "ios-paper",
+    "children": [
+      {"name": "ad","meta": {"title": "广告管理"},"icon": "ios-paper"},
+      {"name": "wechat","meta": {"title": "微信管理"},"icon": "ios-paper"}
+    ]
+  },
+  {
+    "name": "nav5",
+    "meta": {
+      "title": "增长运营管理55555555"
+    },
+    "icon": "ios-paper",
+    "children": [
+      {"name": "ad","meta": {"title": "广告管理"},"icon": "ios-paper"},
+      {"name": "wechat","meta": {"title": "微信管理"},"icon": "ios-paper"}
+    ]
+  },
+  {
+    "name": "nav6",
+    "meta": {
+      "title": "增长运营管理6666666666666"
+    },
+    "icon": "ios-paper",
+    "children": [
+      {"name": "ad","meta": {"title": "广告管理"},"icon": "ios-paper"},
+      {"name": "wechat","meta": {"title": "微信管理"},"icon": "ios-paper"}
+    ]
+  },
+  {
+    "name": "nav7",
+    "meta": {
+      "title": "增长运营管理7777777777"
+    },
+    "icon": "ios-paper",
+    "children": [
+      {"name": "ad","meta": {"title": "广告管理"},"icon": "ios-paper"},
+      {"name": "wechat","meta": {"title": "微信管理"},"icon": "ios-paper"}
     ]
   }
 ]
