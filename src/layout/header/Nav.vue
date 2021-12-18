@@ -2,12 +2,19 @@
   <!-- 导航栏 -->
   <div class="nav-wrap">
     <!-- 导航翻页 -->
-    <div class="nav-page-icon left" @click="scrollLeft"><Icon type="md-arrow-dropleft" /></div>
-    <div class="nav-page-icon right" @click="scrollRight"><Icon type="md-arrow-dropright" /></div>
+    <div class="nav-page-icon left" @click="scrollLeft">
+      <Icon type="md-arrow-dropleft" />
+    </div>
+    <div class="nav-page-icon right" @click="scrollRight">
+      <Icon type="md-arrow-dropright" />
+    </div>
 
     <!-- 滚动区域 -->
     <div id="nav-scroll" class="nav-scroll">
-      <div id="nav-content" class="nav-content" :style="{transform: `translateX(-${scroll}px)`}">
+      <div id="nav-content"
+           class="nav-content"
+           :style="{transform: `translateX(-${scroll}px)`}"
+      >
         <div v-for="navItem in navList"
              :key="navItem.name"
              :data-key="navItem.name"
@@ -23,13 +30,15 @@
 </template>
 
 <script>
+import { throttle, debounce } from '@/utils/common';
+
 export default {
   name: 'HeaderNav',
   data() {
     return {
-      scroll: 0,
-      scrollDom: null,
-      contentWidth: 0,
+      scroll: 0, // 偏移量
+      scrollWidth: 0, // 滚动区域宽度
+      contentWidth: 0, // 内容总宽度
     }
   },
   computed: {
@@ -45,17 +54,22 @@ export default {
     }
   },
   mounted() {
-    this.initOffset()
+    this.initDomInfo()
+    window.addEventListener('resize', this.onResize)
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.onResize)
   },
   methods: {
     /**
-     * 初始化偏移量
+     * 初始化dom宽度信息
      */
-    initOffset() {
-      this.scrollDom = document.getElementById('nav-scroll')
+    initDomInfo() {
       let contentDom = document.getElementById('nav-content')
+      this.scrollWidth = document.getElementById('nav-scroll').offsetWidth
       this.contentWidth = contentDom.offsetWidth
 
+      // 存储每个navItem dom信息
       let menuDict = this.$store.getters['menuModule/getMenuDict']
       contentDom.children.forEach(function(dom) {
         let key = dom.getAttribute('data-key')
@@ -66,27 +80,34 @@ export default {
     },
 
     /**
+     * 窗口尺寸改变，重置滚动区域宽度
+     */
+    onResize: debounce(function() {
+      this.scrollWidth = document.getElementById('nav-scroll').offsetWidth
+      this.scrollToCenter(this.activeNav)
+    }, 300),
+
+    /**
      * 向左滚动
      */
-    scrollLeft() {
-      let scrollWidth = this.scrollDom.offsetWidth
+    scrollLeft: throttle(function() {
       let currentScroll = this.scroll
       if (currentScroll > 0) {
-        this.scroll = Math.max(currentScroll - scrollWidth, 0)
+        this.scroll = Math.max(currentScroll - this.scrollWidth, 0)
       }
-    },
+    }, 500),
 
     /**
      * 向右滚动
      */
-    scrollRight() {
-      let scrollWidth = this.scrollDom.offsetWidth
+    scrollRight: throttle(function() {
+      let scrollWidth = this.scrollWidth
       let maxScroll = this.contentWidth - scrollWidth
       let currentScroll = this.scroll
       if (currentScroll < maxScroll) {
         this.scroll = Math.min(currentScroll + scrollWidth, maxScroll)
       }
-    },
+    }, 500),
 
     /**
      * 当前导航滚动到居中位置
@@ -100,7 +121,7 @@ export default {
         const left = navItem.left
         const width = navItem.width
 
-        const scrollWidth = this.scrollDom.offsetWidth
+        const scrollWidth = this.scrollWidth
         let maxScroll = this.contentWidth - scrollWidth
         let scroll = left - scrollWidth / 2 + width / 2
         if (scroll < 0) {
