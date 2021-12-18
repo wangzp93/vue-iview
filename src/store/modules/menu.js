@@ -24,7 +24,7 @@ export default {
     getMenuDict(state) {
       let menuDict = {}
       menuToDict(menuDict, state.menuData)
-      return menuDict
+      return Object.freeze(menuDict)
     },
     getActiveNav(state) {
       return state.activeNav

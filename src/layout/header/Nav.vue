@@ -8,7 +8,9 @@
     <!-- 滚动区域 -->
     <div id="nav-scroll" class="nav-scroll">
       <div id="nav-content" class="nav-content" :style="{transform: `translateX(-${scroll}px)`}">
-        <div v-for="navItem in navList" :key="navItem.name"
+        <div v-for="navItem in navList"
+             :key="navItem.name"
+             :data-key="navItem.name"
              @click="toNav(navItem.name)"
              class="nav-item" :class="{active: activeNav === navItem.name}"
         >
@@ -40,12 +42,35 @@ export default {
       return this.$store.getters['menuModule/getActiveNav']
     }
   },
+  watch: {
+    activeNav(value) {
+        this.scrollMiddle(value)
+    }
+  },
   mounted() {
-    this.scrollDom = document.getElementById('nav-scroll')
-    this.contentWidth = document.getElementById('nav-content').offsetWidth
-    window.aa = this.scrollDom
+    this.initOffset()
   },
   methods: {
+    /**
+     * 初始化偏移量
+     */
+    initOffset() {
+      this.scrollDom = document.getElementById('nav-scroll')
+      let contentDom = document.getElementById('nav-content')
+      this.contentWidth = contentDom.offsetWidth
+
+      let menuDict = this.$store.getters['menuModule/getMenuDict']
+      contentDom.children.forEach(function(dom) {
+        let key = dom.getAttribute('data-key')
+        const navItem = menuDict[key]
+        navItem.left = dom.offsetLeft
+        navItem.width = dom.offsetWidth
+      })
+
+      // 初始化时，由于dom偏移量是后计算的，所以第一次不会自动触发，要手动触发一次
+      this.scrollMiddle(this.activeNav)
+    },
+
     /**
      * 向左滚动
      */
@@ -67,6 +92,27 @@ export default {
       if (currentScroll < maxScroll) {
         this.scroll = Math.min(currentScroll + scrollWidth, maxScroll)
       }
+    },
+
+    /**
+     * 当前元素滚动到居中位置
+     */
+    scrollMiddle(activeNav) {
+      const menuDict = this.$store.getters['menuModule/getMenuDict']
+      const navItem = menuDict[activeNav]
+      const left = navItem.left
+      const width = navItem.width
+      if (left === undefined || width === undefined) { return }
+
+      const scrollWidth = this.scrollDom.offsetWidth
+      let maxScroll = this.contentWidth - scrollWidth
+      let scroll = left - scrollWidth / 2 + width / 2
+      if (scroll < 0) {
+        scroll = 0
+      } else if (scroll > maxScroll) {
+        scroll = maxScroll
+      }
+      this.scroll = scroll
     },
 
     /**
