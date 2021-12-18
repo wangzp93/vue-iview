@@ -1,3 +1,9 @@
+体验地址
+
+github page：https://github.zhongpeng.wang/vue-iview
+
+gitee page：http://wangzp93.gitee.io/vue-iview
+
 ### 初始化/还原 动态路由
 ![](./readme-img/还原动态路由.jpg)
 
