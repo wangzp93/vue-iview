@@ -39,12 +39,9 @@ export default {
     },
     // 选中的导航
     activeNav() {
-      return this.$store.getters['menuModule/getActiveNav']
-    }
-  },
-  watch: {
-    activeNav(value) {
-        this.scrollMiddle(value)
+      const activeNav = this.$store.getters['menuModule/getActiveNav']
+      this.scrollToCenter(activeNav)
+      return activeNav
     }
   },
   mounted() {
@@ -66,9 +63,6 @@ export default {
         navItem.left = dom.offsetLeft
         navItem.width = dom.offsetWidth
       })
-
-      // 初始化时，由于dom偏移量是后计算的，所以第一次不会自动触发，要手动触发一次
-      this.scrollMiddle(this.activeNav)
     },
 
     /**
@@ -95,24 +89,27 @@ export default {
     },
 
     /**
-     * 当前元素滚动到居中位置
+     * 当前导航滚动到居中位置
      */
-    scrollMiddle(activeNav) {
-      const menuDict = this.$store.getters['menuModule/getMenuDict']
-      const navItem = menuDict[activeNav]
-      const left = navItem.left
-      const width = navItem.width
-      if (left === undefined || width === undefined) { return }
+    scrollToCenter(activeNav) {
+      this.$nextTick(() => {
+        const menuDict = this.$store.getters['menuModule/getMenuDict']
+        const navItem = menuDict[activeNav]
+        if (navItem === undefined) { return }
 
-      const scrollWidth = this.scrollDom.offsetWidth
-      let maxScroll = this.contentWidth - scrollWidth
-      let scroll = left - scrollWidth / 2 + width / 2
-      if (scroll < 0) {
-        scroll = 0
-      } else if (scroll > maxScroll) {
-        scroll = maxScroll
-      }
-      this.scroll = scroll
+        const left = navItem.left
+        const width = navItem.width
+
+        const scrollWidth = this.scrollDom.offsetWidth
+        let maxScroll = this.contentWidth - scrollWidth
+        let scroll = left - scrollWidth / 2 + width / 2
+        if (scroll < 0) {
+          scroll = 0
+        } else if (scroll > maxScroll) {
+          scroll = maxScroll
+        }
+        this.scroll = scroll
+      })
     },
 
     /**
