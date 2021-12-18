@@ -21,22 +21,21 @@ export function initRoutes(router, menuData) {
  * @returns {*[]}
  */
 function getFirstRoutes(menuData = []) {
-  const routerList = []
-  for (let i=0, len=menuData.length; i<len; i++) {
-    const { name, meta, children=[] } = menuData[i]
+  const routerList = menuData.map(function(item) {
+    const { name, meta, children=[] } = item
     const path = `/${name}`
     const secondRoutes = children.length > 0 ? getSecondRoutes(children, path) : []  // 递归获取子路由
     const redirect = secondRoutes.length > 0 ? { name: secondRoutes[0].name } : null  // 重定向子路由第一个
 
-    routerList.push({
+    return {
       path,
       name,
       meta,
       component: (resolve)=> require(['@/layout/PageContent'], resolve),
       redirect,
       children: secondRoutes
-    })
-  }
+    }
+  })
   return routerList
 }
 
@@ -76,8 +75,8 @@ export function setActiveByPath(store, path) {
   let list = path.split('/');
 
   // 选中的导航
-  let currentKey = list.shift()
-  store.commit('menuModule/setActiveNav', currentKey)
+  let activeNav = list.shift()
+  store.commit('menuModule/setActiveNav', activeNav)
 
   let leaf = list.pop() // 叶子节点
   if (leaf) {
@@ -87,24 +86,23 @@ export function setActiveByPath(store, path) {
     const subs = []
     // 面包屑
     const breadList = [{
-      name: currentKey,
-      text: menuDict[currentKey].text,
+      name: activeNav,
+      text: menuDict[activeNav].text,
     }]
 
-    for (let i=0, len=list.length; i<len; i++) {
-      let item = list[i]
-
+    let lastKey = list.reduce(function(lastKey, item) {
       // 展开的菜单
-      currentKey = `${currentKey}/${item}` // nav1/first/second
+      let currentKey = `${lastKey}/${item}` // nav1/first/second
       subs.push(currentKey)
       // 面包屑
       breadList.push({
         text: menuDict[currentKey].text,
       })
-    }
+      return currentKey
+    }, activeNav)
 
     // 选中的菜单 nav1/first/second/leaf
-    let activeMenu = `${currentKey}/${leaf}`
+    let activeMenu = `${lastKey}/${leaf}`
     breadList.push({
       text: menuDict[activeMenu].text,
     })
