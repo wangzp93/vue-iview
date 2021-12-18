@@ -1,6 +1,7 @@
 const path = require('path')
 
 module.exports = {
+  outputDir: 'docs',
   lintOnSave: false,	//是否开启esLint
   css: {  // 全局css
     loaderOptions: {
