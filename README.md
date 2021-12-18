@@ -44,4 +44,6 @@ state: {
 除iview官方文档外，还可在vue.config.js中配置css的lessOptions，
 本次使用后者，因为可以定义全局less变量
 
+### 部署问题
+vue.config.js，配置publicPath为项目名，以/开头
 

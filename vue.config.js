@@ -2,6 +2,7 @@ const path = require('path')
 
 module.exports = {
   outputDir: 'docs',
+  publicPath: '/vue-iview',
   lintOnSave: false,	//是否开启esLint
   css: {  // 全局css
     loaderOptions: {
