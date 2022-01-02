@@ -72,15 +72,15 @@ function getSecondRoutes(secondMenuData = [], parentPath) {
  */
 export function setActiveByPath(store, path) {
   path = path.replace('/', '') // 先去除第一个/
-  let list = path.split('/');
+  const list = path.split('/');
 
   // 选中的导航
-  let activeNav = list.shift()
+  const activeNav = list.shift()
   store.commit('menuModule/setActiveNav', activeNav)
 
-  let leaf = list.pop() // 叶子节点
+  const leaf = list.pop() // 叶子节点
   if (leaf) {
-    let menuDict = store.getters['menuModule/getMenuDict']
+    const menuDict = store.getters['menuModule/getMenuDict']
 
     // 展开的菜单
     const subs = []
@@ -90,9 +90,9 @@ export function setActiveByPath(store, path) {
       text: menuDict[activeNav].text,
     }]
 
-    let lastKey = list.reduce(function(lastKey, item) {
+    const lastKey = list.reduce(function(lastKey, item) {
       // 展开的菜单
-      let currentKey = `${lastKey}/${item}` // nav1/first/second
+      const currentKey = `${lastKey}/${item}` // nav1/first/second
       subs.push(currentKey)
       // 面包屑
       breadList.push({
@@ -102,7 +102,7 @@ export function setActiveByPath(store, path) {
     }, activeNav)
 
     // 选中的菜单 nav1/first/second/leaf
-    let activeMenu = `${lastKey}/${leaf}`
+    const activeMenu = `${lastKey}/${leaf}`
     breadList.push({
       text: menuDict[activeMenu].text,
     })

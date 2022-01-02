@@ -73,16 +73,16 @@ export default {
      * 初始化dom宽度信息
      */
     initDomInfo() {
-      let contentDom = document.getElementById('nav-content')
+      const contentDom = document.getElementById('nav-content')
       this.scrollWidth = document.getElementById('nav-scroll').offsetWidth
       this.contentWidth = contentDom.offsetWidth
 
       // 存储每个navItem dom信息
-      let menuDict = this.$store.getters['menuModule/getMenuDict']
+      const menuDict = this.$store.getters['menuModule/getMenuDict']
       const domList = contentDom.children
       for (let i=0, len=domList.length; i<len; i++) {
         const dom = domList[i]
-        let key = dom.getAttribute('data-key')
+        const key = dom.getAttribute('data-key')
         const navItem = menuDict[key]
         navItem.left = dom.offsetLeft
         navItem.width = dom.offsetWidth
@@ -101,7 +101,7 @@ export default {
      * 向左滚动
      */
     scrollLeft: throttle(function() {
-      let currentScroll = this.scroll
+      const currentScroll = this.scroll
       if (currentScroll > 0) {
         this.scroll = Math.max(currentScroll - this.scrollWidth, 0)
       }
@@ -111,9 +111,9 @@ export default {
      * 向右滚动
      */
     scrollRight: throttle(function() {
-      let scrollWidth = this.scrollWidth
-      let maxScroll = this.contentWidth - scrollWidth
-      let currentScroll = this.scroll
+      const scrollWidth = this.scrollWidth
+      const maxScroll = this.contentWidth - scrollWidth
+      const currentScroll = this.scroll
       if (currentScroll < maxScroll) {
         this.scroll = Math.min(currentScroll + scrollWidth, maxScroll)
       }
@@ -132,7 +132,7 @@ export default {
         const width = navItem.width
 
         const scrollWidth = this.scrollWidth
-        let maxScroll = this.contentWidth - scrollWidth
+        const maxScroll = this.contentWidth - scrollWidth
         let scroll = left - scrollWidth / 2 + width / 2
         if (scroll < 0) {
           scroll = 0

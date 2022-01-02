@@ -8,7 +8,7 @@
 export function throttle(fn, wait) {
   let lastTime = 0
   return function() {
-    let nowTime = Date.now()
+    const nowTime = Date.now()
     if (nowTime - lastTime > wait) {
       lastTime = nowTime
       fn.apply(this, arguments)

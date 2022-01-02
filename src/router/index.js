@@ -56,7 +56,7 @@ router.beforeEach((to, from, next)=> {
         next()
       } else {
         new Promise((resolve) => {
-          let menuData = store.getters['menuModule/getMenuData']
+          const menuData = store.getters['menuModule/getMenuData']
           resolve(menuData.length > 0 ? menuData : store.dispatch('menuModule/getMenuData'))
         }).then(menuData => {
           // 初始化动态路由

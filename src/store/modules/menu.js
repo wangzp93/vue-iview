@@ -22,7 +22,7 @@ export default {
     },
     // 菜单数据字典
     getMenuDict(state) {
-      let menuDict = {}
+      const menuDict = {}
       menuToDict(menuDict, state.menuData)
       return Object.freeze(menuDict)
     },
@@ -69,9 +69,9 @@ export default {
 // 生成菜单数据字典
 function menuToDict(menuDict, menuData, parent = '') {
   for (let i=0, len=menuData.length; i<len; i++) {
-    let { name, children, meta } = menuData[i]
-    let key = parent ? `${parent}/${name}` : name
-    let itemDict = {
+    const { name, children, meta } = menuData[i]
+    const key = parent ? `${parent}/${name}` : name
+    const itemDict = {
       text: meta.title,
     }
     // 如果是第一层，存储子内容
