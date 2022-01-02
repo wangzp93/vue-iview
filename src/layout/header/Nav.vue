@@ -2,10 +2,10 @@
   <!-- 导航栏 -->
   <div class="nav-wrap">
     <!-- 导航翻页 -->
-    <div class="nav-page-icon left" @click="scrollLeft">
+    <div v-show="leftVisible" class="nav-page-icon left" @click="scrollLeft">
       <Icon type="md-arrow-dropleft" />
     </div>
-    <div class="nav-page-icon right" @click="scrollRight">
+    <div v-show="rightVisible" class="nav-page-icon right" @click="scrollRight">
       <Icon type="md-arrow-dropright" />
     </div>
 
@@ -51,7 +51,15 @@ export default {
       const activeNav = this.$store.getters['menuModule/getActiveNav']
       this.scrollToCenter(activeNav)
       return activeNav
-    }
+    },
+    // 控制左滑动按钮显示
+    leftVisible() {
+      return this.scroll > 0
+    },
+    // 控制右滑动按钮显示
+    rightVisible() {
+      return this.scroll < this.contentWidth - this.scrollWidth
+    },
   },
   mounted() {
     this.initDomInfo()
@@ -71,12 +79,14 @@ export default {
 
       // 存储每个navItem dom信息
       let menuDict = this.$store.getters['menuModule/getMenuDict']
-      contentDom.children.forEach(function(dom) {
+      const domList = contentDom.children
+      for (let i=0, len=domList.length; i<len; i++) {
+        const dom = domList[i]
         let key = dom.getAttribute('data-key')
         const navItem = menuDict[key]
         navItem.left = dom.offsetLeft
         navItem.width = dom.offsetWidth
-      })
+      }
     },
 
     /**
